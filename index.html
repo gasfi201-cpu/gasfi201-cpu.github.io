@@ -103,7 +103,6 @@
             font-style: italic;
         }
 
-        /* АВТОРИЗАЦИЯ (только ник) */
         .auth-section {
             background: #0f1424;
             border-radius: 20px;
@@ -440,7 +439,7 @@
         <h1>🫧 <span>Water</span> Clicker</h1>
         <div class="sub">~ капни на кнопку и собирай очки ~</div>
 
-        <!-- АВТОРИЗАЦИЯ (только ник) -->
+        <!-- АВТОРИЗАЦИЯ -->
         <div class="auth-section" id="authSection">
             <div id="authForms">
                 <input type="text" id="usernameInput" placeholder="Введи свой ник">
@@ -448,12 +447,12 @@
             </div>
             <div id="userInfo" class="hidden">
                 <span class="username-display" id="usernameDisplay">Игрок</span>
-                <button class="btn-sm outline" id="logoutBtn" style="margin-left:10px;background:transparent;border:1px solid #74b9ff;color:#74b9ff;">Сменить ник</button>
+                <button class="btn-sm" id="logoutBtn" style="margin-left:10px;background:transparent;border:1px solid #74b9ff;color:#74b9ff;">Сменить ник</button>
             </div>
             <div id="authMessage" style="font-size:13px;margin-top:6px;color:#8888aa;"></div>
         </div>
 
-        <!-- ИГРОВОЙ БЛОК -->
+        <!-- ИГРА -->
         <div id="gameBlock" class="hidden">
             <div class="score-block">
                 <div id="counterDisplay">0</div>
@@ -618,7 +617,6 @@
 
             if (error) console.error('Ошибка сохранения рекорда:', error);
             else {
-                // Обновляем таблицу после сохранения
                 loadLeaderboard();
             }
         }
@@ -659,7 +657,6 @@
                 priceAuto: priceAuto
             };
             localStorage.setItem('waterClickerSave_' + currentUsername, JSON.stringify(data));
-            // Сохраняем рекорд в таблицу лидеров
             saveScoreToLeaderboard();
         }
 
