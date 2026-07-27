@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Water Clicker 🫧</title>
+    <title>Water Clicker</title>
     <style>
         * {
             margin: 0;
@@ -11,7 +11,7 @@
             user-select: none;
         }
         body {
-            background: #0b0f1c;
+            background: #0a0a1a;
             color: #eee;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -19,51 +19,49 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             transition: background 0.5s;
         }
         .container {
-            background: rgba(22, 33, 62, 0.9);
+            background: rgba(20, 30, 60, 0.9);
             backdrop-filter: blur(8px);
-            padding: 25px 30px;
+            padding: 25px;
             border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(116, 185, 255, 0.3);
-            max-width: 550px;
+            border: 1px solid rgba(100, 180, 255, 0.3);
+            max-width: 600px;
             width: 100%;
+            box-shadow: 0 0 60px rgba(0, 150, 255, 0.1);
             position: relative;
         }
-
         .settings-btn {
             position: absolute;
             top: 15px;
             right: 20px;
             background: none;
             border: none;
-            color: #666;
+            color: #667799;
             font-size: 24px;
             cursor: pointer;
             transition: 0.3s;
             z-index: 10;
         }
         .settings-btn:hover {
-            color: #74b9ff;
+            color: #5cb8ff;
             transform: rotate(60deg);
         }
-
         .settings-menu {
             position: absolute;
             top: 55px;
             right: 20px;
-            background: #1a1f33;
-            border: 1px solid #2a2f4a;
+            background: #1a2a4a;
+            border: 1px solid #2a4a6a;
             border-radius: 16px;
-            padding: 10px;
+            padding: 12px;
             display: none;
             flex-direction: column;
             gap: 6px;
             z-index: 20;
-            min-width: 140px;
+            min-width: 160px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
         .settings-menu.open {
@@ -77,172 +75,153 @@
             font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
-            background: #2a2f4a;
+            background: #2a3a5a;
             color: white;
         }
         .settings-menu .btn-danger {
-            background: #533483;
+            background: #6a2a3a;
         }
         .settings-menu .btn-danger:hover {
-            background: #6a46a0;
+            background: #8a3a4a;
         }
-
+        .settings-menu .btn-warning {
+            background: #6a5a2a;
+        }
+        .settings-menu .btn-warning:hover {
+            background: #8a7a3a;
+        }
+        .settings-menu .btn-success {
+            background: #2a5a3a;
+        }
+        .settings-menu .btn-success:hover {
+            background: #3a7a4a;
+        }
         h1 {
-            color: #74b9ff;
-            font-size: 32px;
-            text-shadow: 0 0 30px rgba(116, 185, 255, 0.4);
-            letter-spacing: 2px;
+            font-size: 36px;
+            color: #5cb8ff;
+            text-shadow: 0 0 40px rgba(0, 150, 255, 0.3);
         }
         h1 span {
-            color: #e94560;
+            color: #ff6b8a;
         }
         .sub {
-            color: #8888aa;
-            font-size: 13px;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
-        .auth-section {
-            background: #0f1424;
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(116, 185, 255, 0.15);
-        }
-        .auth-section input {
-            background: #1a1f33;
-            border: 1px solid #2a2f4a;
-            color: #eee;
-            padding: 10px 16px;
-            border-radius: 30px;
-            font-size: 15px;
-            width: 100%;
-            max-width: 220px;
-            margin: 5px;
-            outline: none;
-        }
-        .auth-section input:focus {
-            border-color: #74b9ff;
-        }
-        .auth-section .btn-sm {
-            padding: 8px 20px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 700;
-            cursor: pointer;
+            color: #8899bb;
             font-size: 14px;
-            transition: 0.2s;
-            background: #74b9ff;
-            color: #0b0f1c;
-            margin: 5px;
+            margin-bottom: 15px;
         }
-        .auth-section .btn-sm:hover {
-            background: #8fc9ff;
-        }
-        .auth-section .username-display {
-            color: #74b9ff;
-            font-weight: 700;
-            font-size: 18px;
-        }
-
         .score-block {
-            background: #0f1424;
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 15px;
-            border: 1px solid rgba(116, 185, 255, 0.1);
         }
         #counterDisplay {
             font-size: 72px;
             font-weight: 900;
-            color: #74b9ff;
-            line-height: 1;
-            transition: 0.15s;
-            text-shadow: 0 0 30px rgba(116, 185, 255, 0.2);
+            color: #5cb8ff;
+            transition: 0.1s;
         }
         .progress-wrap {
-            background: #0b0f1c;
+            background: #0a0a1a;
             border-radius: 40px;
-            height: 12px;
-            margin: 15px 0 5px;
+            height: 10px;
+            margin: 12px 0 5px;
             overflow: hidden;
         }
         #progressFill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #74b9ff, #1dd1a1);
+            background: linear-gradient(90deg, #5cb8ff, #00d4a0);
             border-radius: 40px;
-            transition: width 0.2s ease;
+            transition: width 0.25s;
         }
         .target-info {
             display: flex;
             justify-content: space-between;
             font-size: 13px;
-            color: #666688;
+            color: #667799;
         }
         .btn-group {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
-            margin: 12px 0;
+            margin: 10px 0;
         }
         .btn {
             border: none;
-            padding: 12px 24px;
+            padding: 12px 22px;
             border-radius: 60px;
             font-weight: 700;
             font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
-            background: #2a2f4a;
+            background: #1a2a4a;
             color: white;
             flex: 1 0 auto;
-            min-width: 80px;
-            box-shadow: 0 4px 0 #0f1424;
+            min-width: 75px;
+            box-shadow: 0 4px 0 #0a1220;
         }
         .btn:active {
             transform: translateY(3px);
-            box-shadow: 0 1px 0 #0f1424;
+            box-shadow: 0 1px 0 #0a1220;
         }
         .btn-primary {
-            background: #74b9ff;
-            color: #0b0f1c;
-            box-shadow: 0 4px 0 #4a8fc7;
+            background: #5cb8ff;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #2a7ab0;
+            font-size: 18px;
         }
         .btn-primary:hover {
-            background: #8fc9ff;
+            background: #7ac8ff;
         }
         .btn-success {
-            background: #1dd1a1;
-            color: #0b0f1c;
-            box-shadow: 0 4px 0 #0f8b6e;
+            background: #00d4a0;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #009a70;
         }
         .btn-success:hover {
-            background: #30e5b5;
+            background: #00f0b0;
         }
         .btn-danger {
-            background: #533483;
-            box-shadow: 0 4px 0 #3a255a;
+            background: #ff6b8a;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #b0405a;
         }
         .btn-danger:hover {
-            background: #6a46a0;
+            background: #ff88a0;
         }
         .btn-warning {
-            background: #f39c12;
-            color: #0b0f1c;
-            box-shadow: 0 4px 0 #b06d0b;
+            background: #ffb84d;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #b08020;
         }
         .btn-warning:hover {
-            background: #fdcb6e;
+            background: #ffcc66;
         }
         .btn-purple {
-            background: #6c5ce7;
-            box-shadow: 0 4px 0 #4a3a9e;
+            background: #9b6bff;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #6a40b0;
         }
         .btn-purple:hover {
-            background: #7d6ff0;
+            background: #b088ff;
+        }
+        .btn-pink {
+            background: #ff6bc4;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #b0408a;
+        }
+        .btn-pink:hover {
+            background: #ff88d0;
+        }
+        .btn-gold {
+            background: #f7dc6f;
+            color: #0a0a1a;
+            box-shadow: 0 4px 0 #b89c3a;
+        }
+        .btn-gold:hover {
+            background: #ffe88a;
         }
         .stat-grid {
             display: grid;
@@ -250,17 +229,17 @@
             gap: 8px;
             margin: 10px 0;
             font-size: 13px;
-            color: #8888aa;
+            color: #667799;
         }
         .stat-grid span {
             color: #eee;
             font-weight: 700;
         }
         .shop-item {
-            background: #0f1424;
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 16px;
             padding: 10px 15px;
-            margin: 6px 0;
+            margin: 5px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -276,35 +255,35 @@
             color: #fff;
         }
         .shop-item .info .desc {
-            color: #8888aa;
+            color: #667799;
             font-size: 12px;
         }
         .shop-item .price {
-            color: #fdcb6e;
+            color: #ffb84d;
             font-weight: 700;
         }
         .shop-item .btn-sm {
-            padding: 6px 14px;
+            padding: 6px 16px;
             border: none;
             border-radius: 30px;
             font-weight: 700;
             cursor: pointer;
             font-size: 12px;
-            background: #74b9ff;
-            color: #0b0f1c;
+            background: #5cb8ff;
+            color: #0a0a1a;
         }
         .shop-item .btn-sm:hover {
-            background: #8fc9ff;
+            background: #7ac8ff;
         }
         .float-text {
             position: fixed;
             pointer-events: none;
             font-weight: 900;
-            font-size: 28px;
-            color: #74b9ff;
-            text-shadow: 0 0 20px #74b9ff, 0 0 40px #0984e3;
+            font-size: 30px;
+            color: #5cb8ff;
+            text-shadow: 0 0 30px #5cb8ff;
             z-index: 999;
-            animation: floatUp 0.9s ease-out forwards;
+            animation: floatUp 1s ease-out forwards;
         }
         @keyframes floatUp {
             0% {
@@ -313,35 +292,97 @@
             }
             100% {
                 opacity: 0;
-                transform: translateY(-120px) scale(1.5);
+                transform: translateY(-150px) scale(1.6);
             }
         }
-        .water-ripple {
+        .float-text.bonus {
+            color: #ffb84d;
+            text-shadow: 0 0 30px #ffb84d;
+            font-size: 40px;
+        }
+        .float-text.bad {
+            color: #ff6b8a;
+            text-shadow: 0 0 30px #ff6b8a;
+        }
+        .float-text.crit {
+            color: #ff2d55;
+            text-shadow: 0 0 40px #ff2d55;
+            font-size: 50px;
+        }
+        .float-text.pet {
+            color: #f7dc6f;
+            text-shadow: 0 0 40px #f7dc6f;
+            font-size: 44px;
+        }
+        .particle {
             position: fixed;
             pointer-events: none;
             border-radius: 50%;
-            border: 2px solid rgba(116, 185, 255, 0.5);
-            animation: rippleOut 0.6s ease-out forwards;
+            animation: particleExplode 0.8s ease-out forwards;
             z-index: 998;
         }
-        @keyframes rippleOut {
+        @keyframes particleExplode {
             0% {
-                width: 10px;
-                height: 10px;
                 opacity: 1;
-                transform: translate(-50%, -50%) scale(0.5);
+                transform: translate(0, 0) scale(1);
             }
             100% {
-                width: 120px;
-                height: 120px;
                 opacity: 0;
-                transform: translate(-50%, -50%) scale(1.5);
+                transform: translate(var(--tx), var(--ty)) scale(0);
             }
+        }
+        .prestige-badge {
+            background: #9b6bff;
+            color: #0a0a1a;
+            border-radius: 30px;
+            padding: 4px 18px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .event-banner {
+            background: rgba(255, 184, 77, 0.15);
+            border: 1px solid #ffb84d;
+            border-radius: 16px;
+            padding: 8px 15px;
+            margin: 8px 0;
+            font-size: 14px;
+            color: #ffb84d;
+            animation: pulse 1.5s infinite;
+        }
+        .event-banner.good {
+            border-color: #00d4a0;
+            color: #00d4a0;
+            background: rgba(0, 212, 160, 0.15);
+        }
+        .event-banner.bad {
+            border-color: #ff6b8a;
+            color: #ff6b8a;
+            background: rgba(255, 107, 138, 0.15);
+        }
+        .event-banner.pet {
+            border-color: #f7dc6f;
+            color: #f7dc6f;
+            background: rgba(247, 220, 111, 0.2);
+            animation: pulse 0.6s infinite;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.6;
+            }
+        }
+        .hidden {
+            display: none !important;
         }
         footer {
             margin-top: 15px;
             font-size: 12px;
-            color: #444466;
+            color: #445566;
         }
         .click-effect {
             animation: pop 0.15s ease;
@@ -351,77 +392,107 @@
                 transform: scale(1);
             }
             50% {
-                transform: scale(1.15);
+                transform: scale(1.2);
                 color: #fff;
             }
             100% {
                 transform: scale(1);
             }
         }
-        .prestige-badge {
-            background: #74b9ff;
-            color: #0b0f1c;
-            border-radius: 30px;
-            padding: 4px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-block;
-            margin-top: 5px;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .text-success {
-            color: #1dd1a1;
-        }
-        .text-error {
-            color: #e94560;
-        }
-        .leaderboard-section {
-            background: #0f1424;
+
+        .pet-section {
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             padding: 12px 15px;
-            margin-top: 12px;
-            border: 1px solid rgba(116, 185, 255, 0.1);
-            max-height: 200px;
-            overflow-y: auto;
+            margin: 10px 0;
+            border: 1px solid rgba(247, 220, 111, 0.2);
         }
-        .leaderboard-section h3 {
-            color: #8888aa;
-            font-size: 13px;
-            text-transform: uppercase;
+        .pet-section h3 {
+            color: #f7dc6f;
+            font-size: 14px;
             letter-spacing: 2px;
             margin-bottom: 8px;
         }
-        .lb-row {
+        .pet-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+        .pet-item {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 6px 14px;
+            font-size: 13px;
+            border: 2px solid #2a3a5a;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .pet-item.active {
+            border-color: #f7dc6f;
+            background: rgba(247, 220, 111, 0.15);
+            box-shadow: 0 0 20px rgba(247, 220, 111, 0.2);
+        }
+        .pet-item .pet-emoji {
+            font-size: 20px;
+        }
+        .pet-item .pet-level {
+            color: #667799;
+            font-size: 11px;
+        }
+        .pet-item .pet-bonus {
+            color: #00d4a0;
+            font-size: 11px;
+        }
+        .pet-item .pet-hunger {
+            color: #ff6b8a;
+            font-size: 10px;
+        }
+
+        .pet-detail {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 10px;
+            margin-top: 8px;
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            padding: 4px 0;
-            border-bottom: 1px solid #1a1f33;
-            color: #ccc;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
-        .lb-row .lb-rank {
-            color: #fdcb6e;
-            font-weight: 700;
-            width: 40px;
+        .pet-detail .info {
             text-align: left;
+            font-size: 13px;
         }
-        .lb-row .lb-name {
-            flex: 1;
-            text-align: left;
-        }
-        .lb-row .lb-score {
-            color: #74b9ff;
+        .pet-detail .info .name {
             font-weight: 700;
+            color: #f7dc6f;
         }
-        .lb-row.me {
-            background: #1a2a3a;
-            border-radius: 8px;
-            padding: 4px 8px;
+        .pet-detail .info .desc {
+            color: #667799;
+            font-size: 12px;
         }
-        .lb-row.me .lb-name {
-            color: #74b9ff;
+        .pet-detail .btn-sm {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
+            background: #ffb84d;
+            color: #0a0a1a;
+        }
+        .pet-detail .btn-sm:hover {
+            background: #ffcc66;
+        }
+        .pet-detail .btn-sm.feed {
+            background: #00d4a0;
+        }
+        .pet-detail .btn-sm.feed:hover {
+            background: #00f0b0;
         }
     </style>
 </head>
@@ -431,195 +502,125 @@
         <button class="settings-btn" id="settingsToggle">⚙️</button>
         <div class="settings-menu" id="settingsMenu">
             <button class="btn btn-danger" id="resetBtn">🔄 Сброс прогресса</button>
+            <button class="btn btn-warning" id="bgSettingsBtn">🎨 Сменить фон</button>
+            <button class="btn btn-success" id="soundToggleBtn">🔊 Звук: Вкл</button>
         </div>
 
         <h1>🫧 <span>Water</span> Clicker</h1>
         <div class="sub">~ капни на кнопку и собирай очки ~</div>
 
-        <div class="auth-section" id="authSection">
-            <div id="authForms">
-                <input type="text" id="usernameInput" placeholder="Введи свой ник">
-                <button class="btn-sm" id="startBtn">Начать игру</button>
+        <div class="score-block">
+            <div id="counterDisplay">0</div>
+            <div class="progress-wrap"><div id="progressFill"></div></div>
+            <div class="target-info">
+                <span>🎯 Цель: <span id="targetLabel">100</span></span>
+                <span id="progressPercent">0%</span>
+                <span>🔥 Комбо: <span id="comboCount">0</span></span>
             </div>
-            <div id="userInfo" class="hidden">
-                <span class="username-display" id="usernameDisplay">Игрок</span>
-                <button class="btn-sm" id="logoutBtn" style="margin-left:10px;background:transparent;border:1px solid #74b9ff;color:#74b9ff;">Сменить ник</button>
-            </div>
-            <div id="authMessage" style="font-size:13px;margin-top:6px;color:#8888aa;"></div>
+            <div id="prestigeDisplay"></div>
         </div>
 
-        <div id="gameBlock" class="hidden">
-            <div class="score-block">
-                <div id="counterDisplay">0</div>
-                <div class="progress-wrap"><div id="progressFill"></div></div>
-                <div class="target-info">
-                    <span>🎯 Цель: <span id="targetLabel">100</span></span>
-                    <span id="progressPercent">0%</span>
-                    <span>🔥 Комбо: <span id="comboCount">0</span></span>
-                </div>
-                <div id="prestigeDisplay"></div>
-            </div>
+        <div id="eventBanner" class="hidden event-banner"></div>
 
-            <div class="stat-grid">
-                <div>💧 Капель: <span id="statClicks">0</span></div>
-                <div>💪 Сила: <span id="statPerClick">1</span></div>
-                <div>🌟 Престиж: <span id="statPrestige">0</span></div>
-            </div>
-
-            <div class="btn-group">
-                <button class="btn btn-primary" id="clickBtn">💧 КАПНУТЬ!</button>
-                <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
-                <button class="btn btn-warning" id="bgBtn">🎨 ФОН</button>
-            </div>
-            <div class="btn-group">
-                <button class="btn" id="targetBtn" style="background:#2d3a5a;">🎯 ЦЕЛЬ +50</button>
-                <button class="btn btn-purple" id="prestigeBtn">🌟 ПРЕСТИЖ</button>
-            </div>
-
-            <div style="margin:15px 0;">
-                <div class="shop-item">
-                    <div class="info"><span class="name">💧 Усиление капли</span><div class="desc">+1 к силе клика</div></div>
-                    <div><span class="price" id="priceClick">10</span> <button class="btn-sm" id="buyClick">Купить</button></div>
-                </div>
-                <div class="shop-item">
-                    <div class="info"><span class="name">🌊 Авто-поток</span><div class="desc">+1 к автокликеру</div></div>
-                    <div><span class="price" id="priceAuto">20</span> <button class="btn-sm" id="buyAuto">Купить</button></div>
-                </div>
-            </div>
+        <div class="stat-grid">
+            <div>💧 Капель: <span id="statClicks">0</span></div>
+            <div>⚡ Кликов/сек: <span id="statCps">0</span></div>
+            <div>🌟 Престиж: <span id="statPrestige">0</span></div>
         </div>
 
-        <div class="leaderboard-section" id="leaderboardSection">
-            <h3>🏆 Топ игроков</h3>
-            <div id="leaderboardList">
-                <div style="color:#666;font-size:13px;">Загрузка...</div>
+        <!-- ПИТОМЦЫ -->
+        <div class="pet-section">
+            <h3>🐾 ПИТОМЦЫ</h3>
+            <div class="pet-list" id="petList"></div>
+            <div id="petDetail" class="hidden pet-detail"></div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-primary" id="clickBtn">💧 КАПНУТЬ!</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
+            <button class="btn btn-purple" id="prestigeBtn">🌟 ПРЕСТИЖ</button>
+            <button class="btn btn-warning" id="dailyBtn">🎁 ДЕНЬ</button>
+        </div>
+
+        <div style="margin:12px 0;">
+            <div style="text-align:left;font-size:13px;color:#667799;margin-bottom:6px;">🏪 МАГАЗИН БУСТОВ</div>
+
+            <div class="shop-item">
+                <div class="info"><span class="name">⚡ Ускорение клика</span><div class="desc">+1 к силе клика</div></div>
+                <div><span class="price" id="priceClick">10</span> <button class="btn-sm" id="buyClick">Купить</button></div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info"><span class="name">🤖 Авто-капля</span><div class="desc">+1 к автокликеру</div></div>
+                <div><span class="price" id="priceAuto">20</span> <button class="btn-sm" id="buyAuto">Купить</button></div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info"><span class="name">🎯 Увеличение цели</span><div class="desc">Цель +50 очков</div></div>
+                <div><span class="price" id="priceTarget">5</span> <button class="btn-sm" id="buyTarget">Купить</button></div>
+            </div>
+
+            <div class="shop-item">
+                <div class="info"><span class="name">💰 Множитель x2</span><div class="desc">x2 к очкам на 10 сек</div></div>
+                <div><span class="price" id="priceBoost">30</span> <button class="btn-sm" id="buyBoost">Купить</button></div>
             </div>
         </div>
 
         <footer>
-            💾 <span id="saveStatus">Автосохранение включено</span>
+            💾 <span id="saveStatus">Автосохранение</span>
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
     <script>
         // ============================================================
-        // 1. SUPABASE
-        // ============================================================
-        const SUPABASE_URL = 'https://cduuglluvucwwgxpepdv.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkdXVnbGx1dnVjd3dneHBlcGR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODE4OTYsImV4cCI6MjEwMDc1Nzg5Nn0.NtFs0mzasUuGVfa7qWwWYLXIXAY5c0hbq3yqayFx5L8';
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // ============================================================
-        // 2. СОСТОЯНИЕ
+        // 1. СОСТОЯНИЕ
         // ============================================================
         let state = {
             score: 0,
             totalClicks: 0,
             target: 100,
             clickPower: 1,
-            autoPower: 1,
+            autoPower: 0,
             prestigeLevel: 0,
-            highScore: 0
+            highScore: 0,
+            boostActive: false,
+            dailyClaimed: false,
+            dailyDate: '',
+            pets: [],
+            activePetId: null,
+            nextPetThreshold: 1000000
         };
+
+        const PET_TYPES = [
+            { id: 'fish', emoji: '🐠', name: 'Рыбка', bonus: 0.5, feedCost: 100 },
+            { id: 'frog', emoji: '🐸', name: 'Лягушка', bonus: 1, feedCost: 250 },
+            { id: 'turtle', emoji: '🐢', name: 'Черепаха', bonus: 2, feedCost: 500 },
+            { id: 'dolphin', emoji: '🐬', name: 'Дельфин', bonus: 4, feedCost: 1000 },
+            { id: 'whale', emoji: '🐳', name: 'Кит', bonus: 8, feedCost: 2500 },
+            { id: 'dragon', emoji: '🐉', name: 'Дракон', bonus: 15, feedCost: 5000 },
+            { id: 'phoenix', emoji: '🔥', name: 'Феникс', bonus: 30, feedCost: 10000 }
+        ];
 
         let autoInterval = null;
         let isAutoRunning = false;
         let priceClick = 10;
         let priceAuto = 20;
+        let priceTarget = 5;
+        let priceBoost = 30;
         let comboCount = 0;
         let comboTimer = null;
-        let currentUsername = null;
+        let clickHistory = [];
+        let cps = 0;
+        let soundEnabled = true;
+        let boostTimer = null;
 
         // ============================================================
-        // 3. АВТОРИЗАЦИЯ
-        // ============================================================
-        function showAuthMessage(text, type = 'info') {
-            const el = document.getElementById('authMessage');
-            el.textContent = text;
-            el.className = type === 'error' ? 'text-error' : 'text-success';
-        }
-
-        function startGame() {
-            const username = document.getElementById('usernameInput').value.trim();
-            if (!username || username.length < 2) {
-                showAuthMessage('Введи ник (минимум 2 символа)', 'error');
-                return;
-            }
-
-            currentUsername = username;
-            document.getElementById('usernameDisplay').textContent = username;
-            document.getElementById('authForms').classList.add('hidden');
-            document.getElementById('userInfo').classList.remove('hidden');
-            document.getElementById('gameBlock').classList.remove('hidden');
-
-            showAuthMessage('Добро пожаловать, ' + username + '!', 'success');
-            loadGame();
-            loadLeaderboard();
-        }
-
-        function logoutUser() {
-            currentUsername = null;
-            document.getElementById('gameBlock').classList.add('hidden');
-            document.getElementById('userInfo').classList.add('hidden');
-            document.getElementById('authForms').classList.remove('hidden');
-            showAuthMessage('Вы вышли', 'success');
-        }
-
-        // ============================================================
-        // 4. ТАБЛИЦА ЛИДЕРОВ
-        // ============================================================
-        async function loadLeaderboard() {
-            const { data, error } = await supabase
-                .from('scores')
-                .select('username, score, prestige_level')
-                .order('score', { ascending: false })
-                .limit(20);
-
-            if (error) { console.error(error); return; }
-
-            const list = document.getElementById('leaderboardList');
-            if (!data || data.length === 0) {
-                list.innerHTML = '<div style="color:#666;font-size:13px;">Пока нет рекордов. Будь первым!</div>';
-                return;
-            }
-
-            let html = '';
-            data.forEach((item, index) => {
-                const name = item.username || 'Аноним';
-                const isMe = name === currentUsername;
-                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-                html += `<div class="lb-row ${isMe ? 'me' : ''}">
-                            <span class="lb-rank">${medal}</span>
-                            <span class="lb-name">${name}</span>
-                            <span class="lb-score">${item.score}</span>
-                        </div>`;
-            });
-            list.innerHTML = html;
-        }
-
-        async function saveScoreToLeaderboard() {
-            if (!currentUsername) return;
-            const { error } = await supabase
-                .from('scores')
-                .upsert({
-                    username: currentUsername,
-                    score: state.score,
-                    prestige_level: state.prestigeLevel
-                }, { onConflict: 'username' });
-
-            if (error) console.error('Ошибка сохранения рекорда:', error);
-            else {
-                loadLeaderboard();
-            }
-        }
-
-        // ============================================================
-        // 5. ИГРОВАЯ МЕХАНИКА
+        // 2. ЗАГРУЗКА / СОХРАНЕНИЕ
         // ============================================================
         function loadGame() {
-            const saved = localStorage.getItem('waterClickerSave_' + currentUsername);
+            const saved = localStorage.getItem('waterClickerSave');
             if (saved) {
                 try {
                     const data = JSON.parse(saved);
@@ -627,18 +628,26 @@
                     state.totalClicks = data.totalClicks || 0;
                     state.target = data.target || 100;
                     state.clickPower = data.clickPower || 1;
-                    state.autoPower = data.autoPower || 1;
+                    state.autoPower = data.autoPower || 0;
                     state.prestigeLevel = data.prestigeLevel || 0;
                     state.highScore = data.highScore || 0;
+                    state.dailyClaimed = data.dailyClaimed || false;
+                    state.dailyDate = data.dailyDate || '';
+                    state.pets = data.pets || [];
+                    state.activePetId = data.activePetId || null;
+                    state.nextPetThreshold = data.nextPetThreshold || 1000000;
                     priceClick = data.priceClick || 10;
                     priceAuto = data.priceAuto || 20;
+                    priceTarget = data.priceTarget || 5;
+                    priceBoost = data.priceBoost || 30;
                 } catch (e) {}
             }
+            checkDailyBonus();
+            checkPetUnlock();
             updateUI();
         }
 
         function saveGame() {
-            if (!currentUsername) return;
             const data = {
                 score: state.score,
                 totalClicks: state.totalClicks,
@@ -647,113 +656,360 @@
                 autoPower: state.autoPower,
                 prestigeLevel: state.prestigeLevel,
                 highScore: state.highScore,
+                dailyClaimed: state.dailyClaimed,
+                dailyDate: state.dailyDate,
+                pets: state.pets,
+                activePetId: state.activePetId,
+                nextPetThreshold: state.nextPetThreshold,
                 priceClick: priceClick,
-                priceAuto: priceAuto
+                priceAuto: priceAuto,
+                priceTarget: priceTarget,
+                priceBoost: priceBoost
             };
-            localStorage.setItem('waterClickerSave_' + currentUsername, JSON.stringify(data));
-            saveScoreToLeaderboard();
+            localStorage.setItem('waterClickerSave', JSON.stringify(data));
         }
 
         // ============================================================
-        // 6. ЗВУК
+        // 3. ПИТОМЦЫ
         // ============================================================
-        function playWaterDrop(volume = 0.2) {
+        function checkPetUnlock() {
+            while (state.totalClicks >= state.nextPetThreshold) {
+                const petIndex = state.pets.length;
+                if (petIndex >= PET_TYPES.length) break;
+                const petType = PET_TYPES[petIndex];
+                state.pets.push({
+                    id: petType.id,
+                    level: 1,
+                    exp: 0,
+                    hunger: 100,
+                    emoji: petType.emoji,
+                    name: petType.name,
+                    bonus: petType.bonus,
+                    feedCost: petType.feedCost
+                });
+                if (!state.activePetId) state.activePetId = petType.id;
+                state.nextPetThreshold += 1000000;
+                showEvent(`🐾 Новый питомец: ${petType.emoji} ${petType.name}!`, 'pet');
+                spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 40, '#f7dc6f');
+                showFloatingText(window.innerWidth / 2 - 80, window.innerHeight / 2 - 100, `${petType.emoji} ${petType.name}`,
+                    'pet');
+                saveGame();
+            }
+            renderPets();
+        }
+
+        function renderPets() {
+            const list = document.getElementById('petList');
+            if (state.pets.length === 0) {
+                list.innerHTML = '<div style="color:#667799;font-size:13px;">Нет питомцев. Набери 1 000 000 капель!</div>';
+                document.getElementById('petDetail').classList.add('hidden');
+                return;
+            }
+            let html = '';
+            state.pets.forEach(p => {
+                const isActive = state.activePetId === p.id;
+                const levelBonus = (p.bonus * p.level).toFixed(1);
+                html += `<div class="pet-item ${isActive ? 'active' : ''}" data-id="${p.id}">
+                            <span class="pet-emoji">${p.emoji}</span>
+                            <span>${p.name}</span>
+                            <span class="pet-level">Lv${p.level}</span>
+                            <span class="pet-bonus">+${levelBonus}</span>
+                        </div>`;
+            });
+            list.innerHTML = html;
+
+            // Клик по питомцу
+            document.querySelectorAll('.pet-item').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = el.dataset.id;
+                    selectPet(id);
+                });
+            });
+
+            // Показываем детали активного питомца
+            if (state.activePetId) {
+                const pet = state.pets.find(p => p.id === state.activePetId);
+                if (pet) showPetDetail(pet);
+            }
+        }
+
+        function selectPet(id) {
+            state.activePetId = id;
+            saveGame();
+            renderPets();
+            const pet = state.pets.find(p => p.id === id);
+            if (pet) showPetDetail(pet);
+            showEvent(`🐾 Выбран ${pet.emoji} ${pet.name}`, 'good');
+        }
+
+        function showPetDetail(pet) {
+            const detail = document.getElementById('petDetail');
+            detail.classList.remove('hidden');
+            const levelBonus = (pet.bonus * pet.level).toFixed(1);
+            const hungerBar = pet.hunger > 70 ? '😊' : pet.hunger > 40 ? '😐' : '😫';
+            detail.innerHTML = `
+                        <div class="info">
+                            <span class="name">${pet.emoji} ${pet.name}</span>
+                            <div class="desc">Уровень ${pet.level} | Бонус: +${levelBonus} к силе</div>
+                            <div class="desc">Голод: ${Math.round(pet.hunger)}% ${hungerBar}</div>
+                            <div class="desc">До след. уровня: ${Math.floor(100 - pet.exp)}%</div>
+                        </div>
+                        <div>
+                            <button class="btn-sm feed" id="feedPetBtn">🍖 Кормить (${pet.feedCost})</button>
+                        </div>
+                    `;
+            document.getElementById('feedPetBtn').addEventListener('click', () => feedPet(pet.id));
+        }
+
+        function feedPet(id) {
+            const pet = state.pets.find(p => p.id === id);
+            if (!pet) return;
+            if (state.score < pet.feedCost) {
+                showEvent(`🍖 Не хватает ${pet.feedCost} очков!`, 'bad');
+                return;
+            }
+            state.score -= pet.feedCost;
+            pet.hunger = Math.min(100, pet.hunger + 20);
+            pet.exp += 15;
+            if (pet.exp >= 100) {
+                pet.exp = 0;
+                pet.level++;
+                pet.feedCost = Math.floor(pet.feedCost * 1.5) + 10;
+                showEvent(`🎉 ${pet.emoji} ${pet.name} достиг ${pet.level} уровня!`, 'good');
+                spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30, '#f7dc6f');
+            }
+            // Голод со временем падает (проверяется при кликах)
+            saveGame();
+            updateUI();
+            renderPets();
+            playWaterDrop();
+            showEvent(`🍖 ${pet.emoji} ${pet.name} покормлен!`, 'good');
+        }
+
+        function getPetBonus() {
+            if (!state.activePetId) return 0;
+            const pet = state.pets.find(p => p.id === state.activePetId);
+            if (!pet) return 0;
+            // Голод уменьшает бонус
+            const hungerPenalty = Math.max(0, (100 - pet.hunger) / 100 * 0.5);
+            return pet.bonus * pet.level * (1 - hungerPenalty);
+        }
+
+        // ============================================================
+        // 4. ЕЖЕДНЕВНЫЙ БОНУС
+        // ============================================================
+        function checkDailyBonus() {
+            const today = new Date().toDateString();
+            if (state.dailyDate !== today) {
+                state.dailyClaimed = false;
+                state.dailyDate = today;
+                document.getElementById('dailyBtn').textContent = '🎁 ДЕНЬ';
+                document.getElementById('dailyBtn').classList.remove('btn-danger');
+                document.getElementById('dailyBtn').classList.add('btn-warning');
+            } else if (state.dailyClaimed) {
+                document.getElementById('dailyBtn').textContent = '✅ ДЕНЬ';
+                document.getElementById('dailyBtn').classList.remove('btn-warning');
+                document.getElementById('dailyBtn').classList.add('btn-success');
+            }
+        }
+
+        function claimDailyBonus() {
+            if (state.dailyClaimed) {
+                showEvent('⏰ Бонус уже получен сегодня!', 'bad');
+                return;
+            }
+            const bonus = 100 + state.prestigeLevel * 20;
+            state.score += bonus;
+            state.totalClicks += bonus;
+            state.dailyClaimed = true;
+            state.dailyDate = new Date().toDateString();
+            saveGame();
+            updateUI();
+            showEvent(`🎁 Ежедневный бонус: +${bonus} очков!`, 'good');
+            spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30, '#ffb84d');
+            document.getElementById('dailyBtn').textContent = '✅ ДЕНЬ';
+            document.getElementById('dailyBtn').classList.remove('btn-warning');
+            document.getElementById('dailyBtn').classList.add('btn-success');
+        }
+
+        // ============================================================
+        // 5. ЗВУК
+        // ============================================================
+        function playWaterDrop() {
+            if (!soundEnabled) return;
             try {
                 const ctx = new(window.AudioContext || window.webkitAudioContext)();
-                const now = ctx.currentTime;
-                const osc1 = ctx.createOscillator();
-                const gain1 = ctx.createGain();
-                osc1.type = 'sine';
-                osc1.frequency.setValueAtTime(400 + Math.random() * 200, now);
-                osc1.frequency.exponentialRampToValueAtTime(200 + Math.random() * 100, now + 0.12);
-                gain1.gain.setValueAtTime(volume * 0.6, now);
-                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-                osc1.connect(gain1);
-                gain1.connect(ctx.destination);
-                osc1.start(now);
-                osc1.stop(now + 0.15);
-
-                const osc2 = ctx.createOscillator();
-                const gain2 = ctx.createGain();
-                osc2.type = 'sine';
-                osc2.frequency.setValueAtTime(1200 + Math.random() * 300, now);
-                osc2.frequency.exponentialRampToValueAtTime(600, now + 0.08);
-                gain2.gain.setValueAtTime(volume * 0.2, now);
-                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-                osc2.connect(gain2);
-                gain2.connect(ctx.destination);
-                osc2.start(now);
-                osc2.stop(now + 0.12);
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(500 + Math.random() * 200, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200 + Math.random() * 100, ctx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.12, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.12);
             } catch (e) {}
         }
 
         // ============================================================
-        // 7. ВИЗУАЛ
+        // 6. ВИЗУАЛ
         // ============================================================
-        function showFloatingText(x, y, text) {
+        function showFloatingText(x, y, text, type = 'normal') {
             const el = document.createElement('div');
             el.className = 'float-text';
+            if (type === 'bonus') el.classList.add('bonus');
+            if (type === 'bad') el.classList.add('bad');
+            if (type === 'crit') el.classList.add('crit');
+            if (type === 'pet') el.classList.add('pet');
             el.textContent = text;
             el.style.left = (x - 30) + 'px';
             el.style.top = (y - 30) + 'px';
             el.style.fontSize = (24 + state.clickPower * 2) + 'px';
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 1000);
+            setTimeout(() => el.remove(), 1200);
         }
 
-        function showRipple(x, y) {
-            const el = document.createElement('div');
-            el.className = 'water-ripple';
-            el.style.left = x + 'px';
-            el.style.top = y + 'px';
-            document.body.appendChild(el);
-            setTimeout(() => el.remove(), 700);
+        function spawnParticles(x, y, count = 12, color = null) {
+            const colors = ['#5cb8ff', '#00d4a0', '#ffb84d', '#ff6b8a', '#9b6bff'];
+            if (color) {
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    const size = 4 + Math.random() * 8;
+                    const angle = Math.random() * 2 * Math.PI;
+                    const dist = 60 + Math.random() * 100;
+                    p.style.width = size + 'px';
+                    p.style.height = size + 'px';
+                    p.style.background = color;
+                    p.style.left = x + 'px';
+                    p.style.top = y + 'px';
+                    p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                    p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                    document.body.appendChild(p);
+                    setTimeout(() => p.remove(), 800);
+                }
+                return;
+            }
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = 4 + Math.random() * 8;
+                const angle = Math.random() * 2 * Math.PI;
+                const dist = 60 + Math.random() * 100;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 800);
+            }
+        }
+
+        function showEvent(text, type = 'good') {
+            const banner = document.getElementById('eventBanner');
+            banner.textContent = text;
+            banner.className = 'event-banner ' + type;
+            banner.classList.remove('hidden');
+            clearTimeout(banner._timer);
+            banner._timer = setTimeout(() => banner.classList.add('hidden'), 3500);
         }
 
         // ============================================================
-        // 8. ИГРОВАЯ МЕХАНИКА (продолжение)
+        // 7. ИГРОВАЯ МЕХАНИКА
         // ============================================================
+        function getMultiplier() {
+            let mult = 1;
+            if (state.boostActive) mult *= 2;
+            return mult;
+        }
+
         function addScore(amount, event = null) {
+            const petBonus = getPetBonus();
+            const totalPower = state.clickPower + petBonus + Math.floor(comboCount / 15);
+            let finalAmount = totalPower * getMultiplier();
+            let isCrit = false;
+
+            if (Math.random() < 0.05) {
+                finalAmount *= 5;
+                isCrit = true;
+            }
+
             if (state.score < state.target) {
-                state.score += amount;
-                state.totalClicks += amount;
+                state.score += finalAmount;
+                state.totalClicks += amount || totalPower;
+
+                // Проверяем голод питомцев (каждый клик уменьшает голод)
+                state.pets.forEach(p => {
+                    p.hunger = Math.max(0, p.hunger - 0.02);
+                });
 
                 comboCount++;
                 clearTimeout(comboTimer);
                 comboTimer = setTimeout(() => { comboCount = 0;
-                    updateUI(); }, 1200);
-                if (comboCount > 20) {
-                    const bonus = Math.floor(comboCount / 20);
+                    updateUI(); }, 1500);
+
+                if (comboCount > 0 && comboCount % 10 === 0) {
+                    const bonus = Math.floor(comboCount / 5);
                     state.score += bonus;
                     state.totalClicks += bonus;
+                    if (event) showFloatingText(event.clientX - 40, event.clientY - 80, `🔥 +${bonus} комбо!`, 'bonus');
+                    spawnParticles(event.clientX, event.clientY, 20);
                 }
 
                 if (state.score > state.highScore) state.highScore = state.score;
+
+                // Случайное событие (2% шанс)
+                if (Math.random() < 0.02 && event) {
+                    const bonus = Math.floor(state.target * 0.1) + 10;
+                    state.score += bonus;
+                    state.totalClicks += bonus;
+                    showEvent(`🎉 Событие! +${bonus} очков!`, 'good');
+                    spawnParticles(event.clientX, event.clientY, 25);
+                }
+
+                // Проверяем питомцев
+                checkPetUnlock();
+
                 updateUI();
 
                 if (event) {
-                    const text = amount > 1 ? `+${amount}` : '+1';
-                    showFloatingText(event.clientX, event.clientY, text);
-                    showRipple(event.clientX, event.clientY);
+                    let text = totalPower > 1 ? `+${Math.floor(finalAmount)}` : '+1';
+                    if (getMultiplier() > 1) text += ' x2!';
+                    if (isCrit) text = '💥 КРИТ! +' + Math.floor(finalAmount);
+                    showFloatingText(event.clientX, event.clientY, text, isCrit ? 'crit' : 'normal');
+                    spawnParticles(event.clientX, event.clientY, isCrit ? 20 : 6);
                 }
             } else {
                 const d = document.getElementById('counterDisplay');
                 d.style.transform = 'scale(1.1)';
                 setTimeout(() => d.style.transform = 'scale(1)', 150);
+                if (event) showFloatingText(event.clientX, event.clientY, '🎯 Цель!', 'bonus');
             }
         }
 
         function handleClick(event) {
-            const power = state.clickPower + Math.floor(comboCount / 30);
-            addScore(power, event);
-            playWaterDrop(0.15);
+            addScore(1, event);
+            playWaterDrop();
+
             const d = document.getElementById('counterDisplay');
             d.classList.remove('click-effect');
             void d.offsetWidth;
             d.classList.add('click-effect');
+
             const btn = document.getElementById('clickBtn');
             btn.style.transform = 'scale(0.92)';
             setTimeout(() => btn.style.transform = 'scale(1)', 100);
+
+            // Обновляем детали питомца если активен
+            if (state.activePetId) {
+                const pet = state.pets.find(p => p.id === state.activePetId);
+                if (pet) showPetDetail(pet);
+            }
         }
 
         function updateUI() {
@@ -762,40 +1018,48 @@
             const targetLabel = document.getElementById('targetLabel');
             const percentLabel = document.getElementById('progressPercent');
 
-            display.textContent = state.score;
+            display.textContent = Math.floor(state.score);
             targetLabel.textContent = state.target;
             const pct = Math.min((state.score / state.target) * 100, 100);
             progress.style.width = pct + '%';
             percentLabel.textContent = Math.round(pct) + '%';
 
             if (state.score >= state.target) {
-                display.style.color = '#1dd1a1';
-                progress.style.background = 'linear-gradient(90deg, #1dd1a1, #30e5b5)';
+                display.style.color = '#00d4a0';
+                progress.style.background = 'linear-gradient(90deg, #00d4a0, #ffb84d)';
             } else {
-                display.style.color = '#74b9ff';
-                progress.style.background = 'linear-gradient(90deg, #74b9ff, #1dd1a1)';
+                display.style.color = '#5cb8ff';
+                progress.style.background = 'linear-gradient(90deg, #5cb8ff, #00d4a0)';
             }
 
             document.getElementById('statClicks').textContent = state.totalClicks;
-            document.getElementById('statPerClick').textContent = state.clickPower;
             document.getElementById('statPrestige').textContent = state.prestigeLevel;
-            document.getElementById('comboCount').textContent = comboCount;
+
+            const now = Date.now();
+            clickHistory = clickHistory.filter(t => now - t < 1000);
+            cps = clickHistory.length;
+            document.getElementById('statCps').textContent = cps + (isAutoRunning ? '+' + state.autoPower : '');
 
             const pd = document.getElementById('prestigeDisplay');
-            pd.innerHTML = state.prestigeLevel > 0 ? `<span class="prestige-badge">🌟 Престиж ${state.prestigeLevel}</span>` : '';
+            let badgeText = state.prestigeLevel > 0 ? `🌟 Престиж ${state.prestigeLevel}` : '';
+            const petBonus = getPetBonus();
+            if (petBonus > 0) badgeText += ` 🐾 +${petBonus.toFixed(1)}`;
+            pd.innerHTML = badgeText ? `<span class="prestige-badge">${badgeText}</span>` : '';
 
             document.getElementById('priceClick').textContent = priceClick;
             document.getElementById('priceAuto').textContent = priceAuto;
+            document.getElementById('priceTarget').textContent = priceTarget;
+            document.getElementById('priceBoost').textContent = priceBoost;
 
             saveGame();
             document.getElementById('saveStatus').textContent = '✅ Сохранено';
             setTimeout(() => {
-                document.getElementById('saveStatus').textContent = '💾 Автосохранение включено';
+                document.getElementById('saveStatus').textContent = '💾 Автосохранение';
             }, 2000);
         }
 
         // ============================================================
-        // 9. ПРЕСТИЖ
+        // 8. ПРЕСТИЖ
         // ============================================================
         function doPrestige() {
             if (state.score < state.target) {
@@ -811,20 +1075,24 @@
             if (isAutoRunning) stopAutoClicker();
             comboCount = 0;
             updateUI();
-            playWaterDrop(0.3);
+            playWaterDrop();
+            showEvent(`🌟 Престиж ${state.prestigeLevel}!`, 'good');
+            spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 50);
         }
 
         // ============================================================
-        // 10. МАГАЗИН
+        // 9. МАГАЗИН
         // ============================================================
         function buyClickPower() {
             if (state.score < priceClick) { alert(`Нужно ${priceClick} очков!`);
                 return; }
             state.score -= priceClick;
             state.clickPower++;
-            priceClick = Math.floor(priceClick * 1.5) + 2;
+            priceClick = Math.floor(priceClick * 1.6) + 3;
             updateUI();
-            playWaterDrop(0.15);
+            playWaterDrop();
+            showEvent(`⚡ Сила клика: ${state.clickPower}`, 'good');
+            spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 15);
         }
 
         function buyAutoPower() {
@@ -832,31 +1100,73 @@
                 return; }
             state.score -= priceAuto;
             state.autoPower++;
-            priceAuto = Math.floor(priceAuto * 1.5) + 3;
+            priceAuto = Math.floor(priceAuto * 1.6) + 5;
             if (isAutoRunning) { stopAutoClicker();
                 startAutoClicker(); }
             updateUI();
-            playWaterDrop(0.15);
+            playWaterDrop();
+            showEvent(`🤖 Авто-капля: ${state.autoPower}`, 'good');
+            spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 15);
+        }
+
+        function buyTarget() {
+            if (state.score < priceTarget) { alert(`Нужно ${priceTarget} очков!`);
+                return; }
+            state.score -= priceTarget;
+            state.target += 50;
+            priceTarget = Math.floor(priceTarget * 1.5) + 3;
+            updateUI();
+            playWaterDrop();
+            showEvent(`🎯 Цель увеличена до ${state.target}`, 'good');
+        }
+
+        function buyBoost() {
+            if (state.score < priceBoost) { alert(`Нужно ${priceBoost} очков!`);
+                return; }
+            if (state.boostActive) { alert('Множитель уже активен!'); return; }
+            state.score -= priceBoost;
+            state.boostActive = true;
+            priceBoost = Math.floor(priceBoost * 1.8) + 5;
+            updateUI();
+            playWaterDrop();
+            showEvent(`💰 x2 активирован на 10 секунд!`, 'good');
+            spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30);
+
+            clearTimeout(boostTimer);
+            boostTimer = setTimeout(() => {
+                state.boostActive = false;
+                updateUI();
+                showEvent(`⏰ x2 закончился`, 'bad');
+            }, 10000);
         }
 
         // ============================================================
-        // 11. АВТОКЛИКЕР
+        // 10. АВТОКЛИКЕР
         // ============================================================
         function startAutoClicker() {
             if (isAutoRunning) return;
             isAutoRunning = true;
             autoInterval = setInterval(() => {
                 if (state.score < state.target) {
-                    const amount = state.autoPower + Math.floor(comboCount / 40);
+                    const petBonus = getPetBonus();
+                    const totalPower = state.autoPower + petBonus + Math.floor(comboCount / 40);
+                    const amount = totalPower * getMultiplier();
                     state.score += amount;
-                    state.totalClicks += amount;
+                    state.totalClicks += totalPower;
                     if (state.score > state.highScore) state.highScore = state.score;
+                    state.pets.forEach(p => {
+                        p.hunger = Math.max(0, p.hunger - 0.01);
+                    });
+                    checkPetUnlock();
                     updateUI();
-                    if (state.score >= state.target) playWaterDrop(0.25);
+                    if (state.score >= state.target) {
+                        playWaterDrop();
+                        showEvent('🎯 Цель достигнута!', 'good');
+                    }
                 } else {
                     stopAutoClicker();
                 }
-            }, 500);
+            }, 800);
             document.getElementById('autoBtn').textContent = '⏸ СТОП';
             document.getElementById('autoBtn').classList.remove('btn-success');
             document.getElementById('autoBtn').classList.add('btn-danger');
@@ -877,54 +1187,31 @@
         }
 
         // ============================================================
-        // 12. ВСПОМОГАТЕЛЬНЫЕ
+        // 11. НАСТРОЙКИ
         // ============================================================
-        const bgColors = ['#0b0f1c', '#1a1f33', '#2d1b33', '#1b2a33', '#331f1b', '#1b3328', '#2a1b33', '#332b1b'];
+        const bgColors = ['#0a0a1a', '#0d1b2a', '#1a0a1a', '#0a1a1a', '#1a1a0a', '#0a0a2a', '#1a0a2a', '#0a2a1a'];
         let bgIndex = 0;
 
-        function changeBg() { bgIndex = (bgIndex + 1) % bgColors.length;
-            document.body.style.background = bgColors[bgIndex]; }
+        function changeBg() {
+            bgIndex = (bgIndex + 1) % bgColors.length;
+            document.body.style.background = bgColors[bgIndex];
+        }
 
-        function increaseTarget() {
-            state.target += 50;
-            updateUI();
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            document.getElementById('soundToggleBtn').textContent = soundEnabled ? '🔊 Звук: Вкл' : '🔇 Звук: Выкл';
+            if (soundEnabled) playWaterDrop();
         }
 
         function resetGame() {
             if (!confirm('Сбросить весь прогресс?')) return;
             if (isAutoRunning) stopAutoClicker();
-            localStorage.removeItem('waterClickerSave_' + currentUsername);
-            state.score = 0;
-            state.totalClicks = 0;
-            state.target = 100;
-            state.clickPower = 1;
-            state.autoPower = 1;
-            state.prestigeLevel = 0;
-            state.highScore = 0;
-            comboCount = 0;
-            priceClick = 10;
-            priceAuto = 20;
-            updateUI();
-            settingsMenu.classList.remove('open');
-            saveScoreToLeaderboard();
+            localStorage.removeItem('waterClickerSave');
+            location.reload();
         }
 
         // ============================================================
-        // 13. НАВЕШИВАНИЕ КНОПОК
-        // ============================================================
-        document.getElementById('startBtn').addEventListener('click', startGame);
-        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
-        document.getElementById('clickBtn').addEventListener('click', handleClick);
-        document.getElementById('autoBtn').addEventListener('click', toggleAuto);
-        document.getElementById('resetBtn').addEventListener('click', resetGame);
-        document.getElementById('bgBtn').addEventListener('click', changeBg);
-        document.getElementById('targetBtn').addEventListener('click', increaseTarget);
-        document.getElementById('prestigeBtn').addEventListener('click', doPrestige);
-        document.getElementById('buyClick').addEventListener('click', buyClickPower);
-        document.getElementById('buyAuto').addEventListener('click', buyAutoPower);
-
-        // ============================================================
-        // 14. МЕНЮ
+        // 12. МЕНЮ НАСТРОЕК
         // ============================================================
         const settingsToggle = document.getElementById('settingsToggle');
         const settingsMenu = document.getElementById('settingsMenu');
@@ -939,9 +1226,27 @@
             }
         });
 
+        document.getElementById('resetBtn').addEventListener('click', resetGame);
+        document.getElementById('bgSettingsBtn').addEventListener('click', changeBg);
+        document.getElementById('soundToggleBtn').addEventListener('click', toggleSound);
+
         // ============================================================
-        // 15. ЗАПУСК
+        // 13. НАВЕШИВАНИЕ КНОПОК
         // ============================================================
+        document.getElementById('clickBtn').addEventListener('click', handleClick);
+        document.getElementById('autoBtn').addEventListener('click', toggleAuto);
+        document.getElementById('prestigeBtn').addEventListener('click', doPrestige);
+        document.getElementById('dailyBtn').addEventListener('click', claimDailyBonus);
+        document.getElementById('buyClick').addEventListener('click', buyClickPower);
+        document.getElementById('buyAuto').addEventListener('click', buyAutoPower);
+        document.getElementById('buyTarget').addEventListener('click', buyTarget);
+        document.getElementById('buyBoost').addEventListener('click', buyBoost);
+
+        // ============================================================
+        // 14. ЗАПУСК
+        // ============================================================
+        loadGame();
+        renderPets();
         console.log('✅ Water Clicker запущен!');
     </script>
 
