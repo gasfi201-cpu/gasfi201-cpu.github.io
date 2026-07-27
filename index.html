@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <title>Water Clicker 🫧</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
         body {
             background: #0b0f1c;
             color: #eee;
@@ -22,31 +27,131 @@
             backdrop-filter: blur(8px);
             padding: 25px 30px;
             border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
             border: 1px solid rgba(116, 185, 255, 0.3);
-            max-width: 600px;
+            max-width: 550px;
             width: 100%;
+            position: relative;
         }
-        h1 { 
-            color: #74b9ff; 
-            font-size: 32px; 
+
+        .settings-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+        }
+        .settings-btn:hover {
+            color: #74b9ff;
+            transform: rotate(60deg);
+        }
+
+        .settings-menu {
+            position: absolute;
+            top: 55px;
+            right: 20px;
+            background: #1a1f33;
+            border: 1px solid #2a2f4a;
+            border-radius: 16px;
+            padding: 10px;
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            z-index: 20;
+            min-width: 140px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+        }
+        .settings-menu.open {
+            display: flex;
+        }
+        .settings-menu .btn {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #2a2f4a;
+            color: white;
+        }
+        .settings-menu .btn-danger {
+            background: #533483;
+        }
+        .settings-menu .btn-danger:hover {
+            background: #6a46a0;
+        }
+
+        h1 {
+            color: #74b9ff;
+            font-size: 32px;
             text-shadow: 0 0 30px rgba(116, 185, 255, 0.4);
             letter-spacing: 2px;
         }
-        h1 span { color: #e94560; }
-        .sub { 
-            color: #8888aa; 
-            font-size: 13px; 
+        h1 span {
+            color: #e94560;
+        }
+        .sub {
+            color: #8888aa;
+            font-size: 13px;
             margin-bottom: 15px;
             font-style: italic;
         }
+
+        /* АВТОРИЗАЦИЯ (только ник) */
+        .auth-section {
+            background: #0f1424;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(116, 185, 255, 0.15);
+        }
+        .auth-section input {
+            background: #1a1f33;
+            border: 1px solid #2a2f4a;
+            color: #eee;
+            padding: 10px 16px;
+            border-radius: 30px;
+            font-size: 15px;
+            width: 100%;
+            max-width: 220px;
+            margin: 5px;
+            outline: none;
+        }
+        .auth-section input:focus {
+            border-color: #74b9ff;
+        }
+        .auth-section .btn-sm {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s;
+            background: #74b9ff;
+            color: #0b0f1c;
+            margin: 5px;
+        }
+        .auth-section .btn-sm:hover {
+            background: #8fc9ff;
+        }
+        .auth-section .username-display {
+            color: #74b9ff;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
         .score-block {
             background: #0f1424;
             border-radius: 30px;
             padding: 20px;
             margin-bottom: 15px;
-            position: relative;
-            overflow: hidden;
             border: 1px solid rgba(116, 185, 255, 0.1);
         }
         #counterDisplay {
@@ -86,10 +191,10 @@
         }
         .btn {
             border: none;
-            padding: 10px 18px;
+            padding: 12px 24px;
             border-radius: 60px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
             background: #2a2f4a;
@@ -98,45 +203,60 @@
             min-width: 80px;
             box-shadow: 0 4px 0 #0f1424;
         }
-        .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #0f1424; }
-        .btn-primary { background: #74b9ff; color: #0b0f1c; box-shadow: 0 4px 0 #4a8fc7; }
-        .btn-primary:hover { background: #8fc9ff; }
-        .btn-success { background: #1dd1a1; color: #0b0f1c; box-shadow: 0 4px 0 #0f8b6e; }
-        .btn-success:hover { background: #30e5b5; }
-        .btn-danger { background: #533483; box-shadow: 0 4px 0 #3a255a; }
-        .btn-danger:hover { background: #6a46a0; }
-        .btn-warning { background: #f39c12; color: #0b0f1c; box-shadow: 0 4px 0 #b06d0b; }
-        .btn-warning:hover { background: #fdcb6e; }
-        .btn-purple { background: #6c5ce7; box-shadow: 0 4px 0 #4a3a9e; }
-        .btn-purple:hover { background: #7d6ff0; }
-
-        .badge-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            justify-content: center;
-            margin-top: 8px;
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #0f1424;
         }
-        .badge {
-            background: #1a1f33;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            border: 1px solid #2a2f4a;
-            color: #666;
-            transition: 0.3s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
+        .btn-primary {
+            background: #74b9ff;
+            color: #0b0f1c;
+            box-shadow: 0 4px 0 #4a8fc7;
         }
-        .badge.unlocked {
-            border-color: #74b9ff;
-            color: #74b9ff;
-            background: #0f1a2a;
+        .btn-primary:hover {
+            background: #8fc9ff;
         }
-        .badge-icon { font-size: 14px; filter: grayscale(1); }
-        .badge.unlocked .badge-icon { filter: grayscale(0); }
-
+        .btn-success {
+            background: #1dd1a1;
+            color: #0b0f1c;
+            box-shadow: 0 4px 0 #0f8b6e;
+        }
+        .btn-success:hover {
+            background: #30e5b5;
+        }
+        .btn-danger {
+            background: #533483;
+            box-shadow: 0 4px 0 #3a255a;
+        }
+        .btn-danger:hover {
+            background: #6a46a0;
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: #0b0f1c;
+            box-shadow: 0 4px 0 #b06d0b;
+        }
+        .btn-warning:hover {
+            background: #fdcb6e;
+        }
+        .btn-purple {
+            background: #6c5ce7;
+            box-shadow: 0 4px 0 #4a3a9e;
+        }
+        .btn-purple:hover {
+            background: #7d6ff0;
+        }
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: #8888aa;
+        }
+        .stat-grid span {
+            color: #eee;
+            font-weight: 700;
+        }
         .shop-item {
             background: #0f1424;
             border-radius: 16px;
@@ -148,48 +268,35 @@
             flex-wrap: wrap;
             gap: 8px;
         }
-        .shop-item .info { text-align: left; font-size: 14px; }
-        .shop-item .info .name { font-weight: 700; color: #fff; }
-        .shop-item .info .desc { color: #8888aa; font-size: 12px; }
-        .shop-item .price { color: #74b9ff; font-weight: 700; }
-
-        .auto-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #555;
-            margin-right: 6px;
-            transition: 0.3s;
+        .shop-item .info {
+            text-align: left;
+            font-size: 14px;
         }
-        .auto-indicator.active { background: #1dd1a1; box-shadow: 0 0 15px #1dd1a1; }
-        footer { margin-top: 15px; font-size: 12px; color: #444466; }
-        .click-effect { animation: pop 0.15s ease; }
-        @keyframes pop {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); color: #fff; }
-            100% { transform: scale(1); }
+        .shop-item .info .name {
+            font-weight: 700;
+            color: #fff;
         }
-        .prestige-badge {
+        .shop-item .info .desc {
+            color: #8888aa;
+            font-size: 12px;
+        }
+        .shop-item .price {
+            color: #fdcb6e;
+            font-weight: 700;
+        }
+        .shop-item .btn-sm {
+            padding: 6px 14px;
+            border: none;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 12px;
             background: #74b9ff;
             color: #0b0f1c;
-            border-radius: 30px;
-            padding: 4px 16px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-block;
-            margin-top: 5px;
         }
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin: 10px 0;
-            font-size: 13px;
-            color: #8888aa;
+        .shop-item .btn-sm:hover {
+            background: #8fc9ff;
         }
-        .stat-grid span { color: #eee; font-weight: 700; }
-
         .float-text {
             position: fixed;
             pointer-events: none;
@@ -201,8 +308,14 @@
             animation: floatUp 0.9s ease-out forwards;
         }
         @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-120px) scale(1.5); }
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(1.5);
+            }
         }
         .water-ripple {
             position: fixed;
@@ -213,452 +326,633 @@
             z-index: 998;
         }
         @keyframes rippleOut {
-            0% { width: 10px; height: 10px; opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
-            100% { width: 120px; height: 120px; opacity: 0; transform: translate(-50%, -50%) scale(1.5); }
+            0% {
+                width: 10px;
+                height: 10px;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                width: 120px;
+                height: 120px;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+        }
+        footer {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #444466;
+        }
+        .click-effect {
+            animation: pop 0.15s ease;
+        }
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+                color: #fff;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .prestige-badge {
+            background: #74b9ff;
+            color: #0b0f1c;
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 5px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        .text-success {
+            color: #1dd1a1;
+        }
+        .text-error {
+            color: #e94560;
+        }
+        .leaderboard-section {
+            background: #0f1424;
+            border-radius: 20px;
+            padding: 12px 15px;
+            margin-top: 12px;
+            border: 1px solid rgba(116, 185, 255, 0.1);
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .leaderboard-section h3 {
+            color: #8888aa;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+        .lb-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 4px 0;
+            border-bottom: 1px solid #1a1f33;
+            color: #ccc;
+        }
+        .lb-row .lb-rank {
+            color: #fdcb6e;
+            font-weight: 700;
+            width: 40px;
+            text-align: left;
+        }
+        .lb-row .lb-name {
+            flex: 1;
+            text-align: left;
+        }
+        .lb-row .lb-score {
+            color: #74b9ff;
+            font-weight: 700;
+        }
+        .lb-row.me {
+            background: #1a2a3a;
+            border-radius: 8px;
+            padding: 4px 8px;
+        }
+        .lb-row.me .lb-name {
+            color: #74b9ff;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🫧 <span>Water</span> Clicker</h1>
-    <div class="sub">~ капни на кнопку и собирай очки ~</div>
+    <div class="container">
+        <!-- ШЕСТЕРЁНКА -->
+        <button class="settings-btn" id="settingsToggle">⚙️</button>
 
-    <div class="score-block">
-        <div id="counterDisplay">0</div>
-        <div class="progress-wrap"><div id="progressFill"></div></div>
-        <div class="target-info">
-            <span>🎯 Цель: <span id="targetLabel">100</span></span>
-            <span id="progressPercent">0%</span>
-            <span>🔥 Комбо: <span id="comboCount">0</span></span>
+        <!-- ВЫПАДАЮЩЕЕ МЕНЮ -->
+        <div class="settings-menu" id="settingsMenu">
+            <button class="btn btn-danger" id="resetBtn">🔄 Сброс прогресса</button>
         </div>
-        <div id="prestigeDisplay"></div>
-    </div>
 
-    <div class="stat-grid">
-        <div>💧 Капель: <span id="statClicks">0</span></div>
-        <div>💪 Сила: <span id="statPerClick">1</span></div>
-        <div>🌟 Престиж: <span id="statPrestige">0</span></div>
-    </div>
+        <h1>🫧 <span>Water</span> Clicker</h1>
+        <div class="sub">~ капни на кнопку и собирай очки ~</div>
 
-    <div class="btn-group">
-        <button class="btn btn-primary" id="clickBtn">💧 КАПНУТЬ!</button>
-        <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
-        <button class="btn btn-danger" id="resetBtn">🔄 СБРОС</button>
-    </div>
-    <div class="btn-group">
-        <button class="btn btn-warning" id="bgBtn">🎨 ФОН</button>
-        <button class="btn" id="targetBtn" style="background:#2d3a5a;">🎯 ЦЕЛЬ +50</button>
-        <button class="btn btn-purple" id="prestigeBtn">🌟 ПРЕСТИЖ</button>
-    </div>
-
-    <div style="margin:15px 0;">
-        <div class="shop-item">
-            <div class="info"><span class="name">💧 Усиление капли</span><div class="desc">+1 к силе клика</div></div>
-            <div><span class="price" id="priceClick">10</span> <button class="btn btn-primary" id="buyClick" style="padding:6px 14px;font-size:12px;">Купить</button></div>
+        <!-- АВТОРИЗАЦИЯ (только ник) -->
+        <div class="auth-section" id="authSection">
+            <div id="authForms">
+                <input type="text" id="usernameInput" placeholder="Введи свой ник">
+                <button class="btn-sm" id="startBtn">Начать игру</button>
+            </div>
+            <div id="userInfo" class="hidden">
+                <span class="username-display" id="usernameDisplay">Игрок</span>
+                <button class="btn-sm outline" id="logoutBtn" style="margin-left:10px;background:transparent;border:1px solid #74b9ff;color:#74b9ff;">Сменить ник</button>
+            </div>
+            <div id="authMessage" style="font-size:13px;margin-top:6px;color:#8888aa;"></div>
         </div>
-        <div class="shop-item">
-            <div class="info"><span class="name">🌊 Авто-поток</span><div class="desc">+1 к автокликеру</div></div>
-            <div><span class="price" id="priceAuto">20</span> <button class="btn btn-success" id="buyAuto" style="padding:6px 14px;font-size:12px;">Купить</button></div>
+
+        <!-- ИГРОВОЙ БЛОК -->
+        <div id="gameBlock" class="hidden">
+            <div class="score-block">
+                <div id="counterDisplay">0</div>
+                <div class="progress-wrap"><div id="progressFill"></div></div>
+                <div class="target-info">
+                    <span>🎯 Цель: <span id="targetLabel">100</span></span>
+                    <span id="progressPercent">0%</span>
+                    <span>🔥 Комбо: <span id="comboCount">0</span></span>
+                </div>
+                <div id="prestigeDisplay"></div>
+            </div>
+
+            <div class="stat-grid">
+                <div>💧 Капель: <span id="statClicks">0</span></div>
+                <div>💪 Сила: <span id="statPerClick">1</span></div>
+                <div>🌟 Престиж: <span id="statPrestige">0</span></div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" id="clickBtn">💧 КАПНУТЬ!</button>
+                <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
+                <button class="btn btn-warning" id="bgBtn">🎨 ФОН</button>
+            </div>
+            <div class="btn-group">
+                <button class="btn" id="targetBtn" style="background:#2d3a5a;">🎯 ЦЕЛЬ +50</button>
+                <button class="btn btn-purple" id="prestigeBtn">🌟 ПРЕСТИЖ</button>
+            </div>
+
+            <div style="margin:15px 0;">
+                <div class="shop-item">
+                    <div class="info"><span class="name">💧 Усиление капли</span><div class="desc">+1 к силе клика</div></div>
+                    <div><span class="price" id="priceClick">10</span> <button class="btn-sm" id="buyClick">Купить</button></div>
+                </div>
+                <div class="shop-item">
+                    <div class="info"><span class="name">🌊 Авто-поток</span><div class="desc">+1 к автокликеру</div></div>
+                    <div><span class="price" id="priceAuto">20</span> <button class="btn-sm" id="buyAuto">Купить</button></div>
+                </div>
+            </div>
         </div>
+
+        <!-- ТАБЛИЦА ЛИДЕРОВ -->
+        <div class="leaderboard-section" id="leaderboardSection">
+            <h3>🏆 Топ игроков</h3>
+            <div id="leaderboardList">
+                <div style="color:#666;font-size:13px;">Загрузка...</div>
+            </div>
+        </div>
+
+        <footer>
+            💾 <span id="saveStatus">Автосохранение включено</span>
+        </footer>
     </div>
 
-    <div style="margin-top:15px;background:#0f1424;border-radius:20px;padding:12px;">
-        <div style="font-size:12px;color:#8888aa;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px;">🏅 Достижения</div>
-        <div class="badge-list" id="badgeList">
-            <div class="badge" id="achFirst"><span class="badge-icon">👆</span> Первая капля</div>
-            <div class="badge" id="ach50"><span class="badge-icon">50</span> 50 капель</div>
-            <div class="badge" id="ach100"><span class="badge-icon">💯</span> 100 капель</div>
-            <div class="badge" id="ach500"><span class="badge-icon">🔥</span> 500 капель</div>
-            <div class="badge" id="achAuto"><span class="badge-icon">🤖</span> Авто-поток</div>
-            <div class="badge" id="achGoal"><span class="badge-icon">🎯</span> Цель</div>
-            <div class="badge" id="achPrestige"><span class="badge-icon">🌟</span> Престиж</div>
-            <div class="badge" id="achSecret"><span class="badge-icon">🤯</span> Секрет</div>
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+    </script>
+    <script>
+        // ============================================================
+        // 1. SUPABASE
+        // ============================================================
+        const SUPABASE_URL = 'https://cduuglluvucwwgxpepdv.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkdXVnbGx1dnVjd3dneHBlcGR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxODE4OTYsImV4cCI6MjEwMDc1Nzg5Nn0.NtFs0mzasUuGVfa7qWwWYLXIXAY5c0hbq3yqayFx5L8';
 
-    <footer>
-        <span class="auto-indicator" id="autoIndicator"></span>
-        <span id="autoStatus">Автокликер выключен</span>
-        <span style="margin-left:15px;">💾 <span id="saveStatus">Сохранено</span></span>
-    </footer>
-</div>
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-<script>
-    // ============================================================
-    // 1. ЗВУК КАПЛИ ВОДЫ (бульк)
-    // ============================================================
-    function playWaterDrop(volume = 0.2) {
-        try {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const now = ctx.currentTime;
-
-            // Главный тон (синус с водой)
-            const osc1 = ctx.createOscillator();
-            const gain1 = ctx.createGain();
-            osc1.type = 'sine';
-            osc1.frequency.setValueAtTime(400 + Math.random() * 200, now);
-            osc1.frequency.exponentialRampToValueAtTime(200 + Math.random() * 100, now + 0.12);
-            gain1.gain.setValueAtTime(volume * 0.6, now);
-            gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-            osc1.connect(gain1);
-            gain1.connect(ctx.destination);
-            osc1.start(now);
-            osc1.stop(now + 0.15);
-
-            // Второй обертон
-            const osc2 = ctx.createOscillator();
-            const gain2 = ctx.createGain();
-            osc2.type = 'sine';
-            osc2.frequency.setValueAtTime(1200 + Math.random() * 300, now);
-            osc2.frequency.exponentialRampToValueAtTime(600, now + 0.08);
-            gain2.gain.setValueAtTime(volume * 0.2, now);
-            gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-            osc2.connect(gain2);
-            gain2.connect(ctx.destination);
-            osc2.start(now);
-            osc2.stop(now + 0.12);
-
-            // Лёгкий шум воды
-            const bufferSize = ctx.sampleRate * 0.04;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) {
-                const env = Math.exp(-i / (ctx.sampleRate * 0.02));
-                data[i] = (Math.random() * 2 - 1) * env * 0.3;
-            }
-            const noise = ctx.createBufferSource();
-            noise.buffer = buffer;
-            const gain3 = ctx.createGain();
-            gain3.gain.value = volume * 0.3;
-            noise.connect(gain3);
-            gain3.connect(ctx.destination);
-            noise.start(now);
-            noise.stop(now + 0.04);
-        } catch(e) {}
-    }
-
-    // ============================================================
-    // 2. СОСТОЯНИЕ
-    // ============================================================
-    let state = {
-        score: 0,
-        totalClicks: 0,
-        target: 100,
-        clickPower: 1,
-        autoPower: 1,
-        prestigeLevel: 0,
-        highScore: 0,
-        achievements: {
-            first: false, a50: false, a100: false, a500: false,
-            auto: false, goal: false, prestige: false, secret: false
-        }
-    };
-
-    let autoInterval = null;
-    let isAutoRunning = false;
-    let priceClick = 10;
-    let priceAuto = 20;
-    let comboCount = 0;
-    let comboTimer = null;
-
-    // ============================================================
-    // 3. UI ОБНОВЛЕНИЕ
-    // ============================================================
-    function updateUI() {
-        const display = document.getElementById('counterDisplay');
-        const progress = document.getElementById('progressFill');
-        const targetLabel = document.getElementById('targetLabel');
-        const percentLabel = document.getElementById('progressPercent');
-
-        display.textContent = state.score;
-        targetLabel.textContent = state.target;
-        const pct = Math.min((state.score / state.target) * 100, 100);
-        progress.style.width = pct + '%';
-        percentLabel.textContent = Math.round(pct) + '%';
-
-        if (state.score >= state.target) {
-            display.style.color = '#1dd1a1';
-            progress.style.background = 'linear-gradient(90deg, #1dd1a1, #30e5b5)';
-        } else {
-            display.style.color = '#74b9ff';
-            progress.style.background = 'linear-gradient(90deg, #74b9ff, #1dd1a1)';
-        }
-
-        document.getElementById('statClicks').textContent = state.totalClicks;
-        document.getElementById('statPerClick').textContent = state.clickPower;
-        document.getElementById('statPrestige').textContent = state.prestigeLevel;
-        document.getElementById('comboCount').textContent = comboCount;
-
-        if (state.score > state.highScore) state.highScore = state.score;
-
-        const pd = document.getElementById('prestigeDisplay');
-        pd.innerHTML = state.prestigeLevel > 0 ? `<span class="prestige-badge">🌟 Престиж ${state.prestigeLevel}</span>` : '';
-
-        document.getElementById('priceClick').textContent = priceClick;
-        document.getElementById('priceAuto').textContent = priceAuto;
-
-        checkAchievements();
-        saveGame();
-    }
-
-    // ============================================================
-    // 4. ВИЗУАЛ
-    // ============================================================
-    function showFloatingText(x, y, text) {
-        const el = document.createElement('div');
-        el.className = 'float-text';
-        el.textContent = text;
-        el.style.left = (x - 30) + 'px';
-        el.style.top = (y - 30) + 'px';
-        el.style.fontSize = (24 + state.clickPower * 2) + 'px';
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 1000);
-    }
-
-    function showRipple(x, y) {
-        const el = document.createElement('div');
-        el.className = 'water-ripple';
-        el.style.left = x + 'px';
-        el.style.top = y + 'px';
-        document.body.appendChild(el);
-        setTimeout(() => el.remove(), 700);
-    }
-
-    // ============================================================
-    // 5. МЕХАНИКА
-    // ============================================================
-    function addScore(amount, event = null) {
-        if (state.score < state.target) {
-            state.score += amount;
-            state.totalClicks += amount;
-
-            comboCount++;
-            clearTimeout(comboTimer);
-            comboTimer = setTimeout(() => { comboCount = 0; updateUI(); }, 1200);
-            if (comboCount > 20) {
-                const bonus = Math.floor(comboCount / 20);
-                state.score += bonus;
-                state.totalClicks += bonus;
-            }
-
-            updateUI();
-
-            if (event) {
-                const text = amount > 1 ? `+${amount}` : '+1';
-                showFloatingText(event.clientX, event.clientY, text);
-                showRipple(event.clientX, event.clientY);
-            }
-        } else {
-            const d = document.getElementById('counterDisplay');
-            d.style.transform = 'scale(1.1)';
-            setTimeout(() => d.style.transform = 'scale(1)', 150);
-        }
-    }
-
-    function handleClick(event) {
-        const power = state.clickPower + Math.floor(comboCount / 30);
-        addScore(power, event);
-        playWaterDrop(0.15);
-
-        const d = document.getElementById('counterDisplay');
-        d.classList.remove('click-effect');
-        void d.offsetWidth;
-        d.classList.add('click-effect');
-
-        const btn = document.getElementById('clickBtn');
-        btn.style.transform = 'scale(0.92)';
-        setTimeout(() => btn.style.transform = 'scale(1)', 100);
-    }
-
-    // ============================================================
-    // 6. СОХРАНЕНИЕ / ЗАГРУЗКА
-    // ============================================================
-    function saveGame() {
-        const data = {
-            score: state.score,
-            totalClicks: state.totalClicks,
-            target: state.target,
-            clickPower: state.clickPower,
-            autoPower: state.autoPower,
-            prestigeLevel: state.prestigeLevel,
-            highScore: state.highScore,
-            achievements: state.achievements,
-            priceClick: priceClick,
-            priceAuto: priceAuto
+        // ============================================================
+        // 2. СОСТОЯНИЕ
+        // ============================================================
+        let state = {
+            score: 0,
+            totalClicks: 0,
+            target: 100,
+            clickPower: 1,
+            autoPower: 1,
+            prestigeLevel: 0,
+            highScore: 0
         };
-        localStorage.setItem('clickerSave', JSON.stringify(data));
-        document.getElementById('saveStatus').textContent = '✅ Сохранено';
-        setTimeout(() => document.getElementById('saveStatus').textContent = '💾 Сохранено', 2000);
-    }
 
-    function loadGame() {
-        const raw = localStorage.getItem('clickerSave');
-        if (!raw) return false;
-        try {
-            const data = JSON.parse(raw);
-            state.score = data.score || 0;
-            state.totalClicks = data.totalClicks || 0;
-            state.target = data.target || 100;
-            state.clickPower = data.clickPower || 1;
-            state.autoPower = data.autoPower || 1;
-            state.prestigeLevel = data.prestigeLevel || 0;
-            state.highScore = data.highScore || 0;
-            state.achievements = data.achievements || state.achievements;
-            priceClick = data.priceClick || 10;
-            priceAuto = data.priceAuto || 20;
-            return true;
-        } catch(e) { return false; }
-    }
+        let autoInterval = null;
+        let isAutoRunning = false;
+        let priceClick = 10;
+        let priceAuto = 20;
+        let comboCount = 0;
+        let comboTimer = null;
+        let currentUsername = null;
 
-    // ============================================================
-    // 7. АЧИВКИ
-    // ============================================================
-    function unlockBadge(id) {
-        const el = document.getElementById(id);
-        if (el && !el.classList.contains('unlocked')) {
-            el.classList.add('unlocked');
-            playWaterDrop(0.2);
+        // ============================================================
+        // 3. АВТОРИЗАЦИЯ
+        // ============================================================
+        function showAuthMessage(text, type = 'info') {
+            const el = document.getElementById('authMessage');
+            el.textContent = text;
+            el.className = type === 'error' ? 'text-error' : 'text-success';
         }
-    }
 
-    function checkAchievements() {
-        const a = state.achievements;
-        if (state.totalClicks >= 1 && !a.first) { a.first = true; unlockBadge('achFirst'); }
-        if (state.totalClicks >= 50 && !a.a50) { a.a50 = true; unlockBadge('ach50'); }
-        if (state.totalClicks >= 100 && !a.a100) { a.a100 = true; unlockBadge('ach100'); }
-        if (state.totalClicks >= 500 && !a.a500) { a.a500 = true; unlockBadge('ach500'); }
-        if (state.score >= state.target && !a.goal) { a.goal = true; unlockBadge('achGoal'); }
-        if (state.prestigeLevel >= 1 && !a.prestige) { a.prestige = true; unlockBadge('achPrestige'); }
-        if (state.totalClicks >= 1000 && !a.secret) { a.secret = true; unlockBadge('achSecret'); }
-    }
+        function startGame() {
+            const username = document.getElementById('usernameInput').value.trim();
+            if (!username || username.length < 2) {
+                showAuthMessage('Введи ник (минимум 2 символа)', 'error');
+                return;
+            }
 
-    function unlockAutoAchievement() {
-        if (!state.achievements.auto) {
-            state.achievements.auto = true;
-            unlockBadge('achAuto');
+            currentUsername = username;
+            document.getElementById('usernameDisplay').textContent = username;
+            document.getElementById('authForms').classList.add('hidden');
+            document.getElementById('userInfo').classList.remove('hidden');
+            document.getElementById('gameBlock').classList.remove('hidden');
+
+            showAuthMessage('Добро пожаловать, ' + username + '!', 'success');
+            loadGame();
+            loadLeaderboard();
         }
-    }
 
-    // ============================================================
-    // 8. ПРЕСТИЖ, МАГАЗИН, АВТО
-    // ============================================================
-    function doPrestige() {
-        if (state.score < state.target) {
-            alert(`Достигни цели (${state.target}), чтобы взять престиж!`);
-            return;
+        function logoutUser() {
+            currentUsername = null;
+            document.getElementById('gameBlock').classList.add('hidden');
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('authForms').classList.remove('hidden');
+            showAuthMessage('Вы вышли', 'success');
         }
-        if (!confirm(`🌟 Перейти на новый уровень престижа?\nТекущий: ${state.prestigeLevel}\nСчёт сбросится, но ты получишь +1 к силе клика и +50 к цели!`)) return;
 
-        state.prestigeLevel++;
-        state.score = 0;
-        state.target = 100 + state.prestigeLevel * 50;
-        state.clickPower = 1 + state.prestigeLevel;
-        state.achievements.first = false;
-        state.achievements.a50 = false;
-        state.achievements.a100 = false;
-        state.achievements.a500 = false;
-        state.achievements.goal = false;
-        state.achievements.secret = false;
-        ['achFirst','ach50','ach100','ach500','achGoal','achSecret'].forEach(id => {
-            document.getElementById(id)?.classList.remove('unlocked');
-        });
-        if (isAutoRunning) stopAutoClicker();
-        comboCount = 0;
-        updateUI();
-        playWaterDrop(0.3);
-    }
+        // ============================================================
+        // 4. ТАБЛИЦА ЛИДЕРОВ
+        // ============================================================
+        async function loadLeaderboard() {
+            const { data, error } = await supabase
+                .from('scores')
+                .select('username, score, prestige_level')
+                .order('score', { ascending: false })
+                .limit(20);
 
-    function buyClickPower() {
-        if (state.score < priceClick) { alert(`Нужно ${priceClick} очков!`); return; }
-        state.score -= priceClick;
-        state.clickPower++;
-        priceClick = Math.floor(priceClick * 1.5) + 2;
-        updateUI();
-        playWaterDrop(0.15);
-    }
+            if (error) { console.error(error); return; }
 
-    function buyAutoPower() {
-        if (state.score < priceAuto) { alert(`Нужно ${priceAuto} очков!`); return; }
-        state.score -= priceAuto;
-        state.autoPower++;
-        priceAuto = Math.floor(priceAuto * 1.5) + 3;
-        if (isAutoRunning) { stopAutoClicker(); startAutoClicker(); }
-        updateUI();
-        playWaterDrop(0.15);
-    }
+            const list = document.getElementById('leaderboardList');
+            if (!data || data.length === 0) {
+                list.innerHTML = '<div style="color:#666;font-size:13px;">Пока нет рекордов. Будь первым!</div>';
+                return;
+            }
 
-    function startAutoClicker() {
-        if (isAutoRunning) return;
-        isAutoRunning = true;
-        autoInterval = setInterval(() => {
+            let html = '';
+            data.forEach((item, index) => {
+                const name = item.username || 'Аноним';
+                const isMe = name === currentUsername;
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+                html += `<div class="lb-row ${isMe ? 'me' : ''}">
+                            <span class="lb-rank">${medal}</span>
+                            <span class="lb-name">${name}</span>
+                            <span class="lb-score">${item.score}</span>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        async function saveScoreToLeaderboard() {
+            if (!currentUsername) return;
+            const { error } = await supabase
+                .from('scores')
+                .upsert({
+                    username: currentUsername,
+                    score: state.score,
+                    prestige_level: state.prestigeLevel
+                }, { onConflict: 'username' });
+
+            if (error) console.error('Ошибка сохранения рекорда:', error);
+            else {
+                // Обновляем таблицу после сохранения
+                loadLeaderboard();
+            }
+        }
+
+        // ============================================================
+        // 5. ИГРОВАЯ МЕХАНИКА
+        // ============================================================
+        function loadGame() {
+            const saved = localStorage.getItem('waterClickerSave_' + currentUsername);
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    state.score = data.score || 0;
+                    state.totalClicks = data.totalClicks || 0;
+                    state.target = data.target || 100;
+                    state.clickPower = data.clickPower || 1;
+                    state.autoPower = data.autoPower || 1;
+                    state.prestigeLevel = data.prestigeLevel || 0;
+                    state.highScore = data.highScore || 0;
+                    priceClick = data.priceClick || 10;
+                    priceAuto = data.priceAuto || 20;
+                } catch (e) {}
+            }
+            updateUI();
+        }
+
+        function saveGame() {
+            if (!currentUsername) return;
+            const data = {
+                score: state.score,
+                totalClicks: state.totalClicks,
+                target: state.target,
+                clickPower: state.clickPower,
+                autoPower: state.autoPower,
+                prestigeLevel: state.prestigeLevel,
+                highScore: state.highScore,
+                priceClick: priceClick,
+                priceAuto: priceAuto
+            };
+            localStorage.setItem('waterClickerSave_' + currentUsername, JSON.stringify(data));
+            // Сохраняем рекорд в таблицу лидеров
+            saveScoreToLeaderboard();
+        }
+
+        // ============================================================
+        // 6. ЗВУК
+        // ============================================================
+        function playWaterDrop(volume = 0.2) {
+            try {
+                const ctx = new(window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+                const osc1 = ctx.createOscillator();
+                const gain1 = ctx.createGain();
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(400 + Math.random() * 200, now);
+                osc1.frequency.exponentialRampToValueAtTime(200 + Math.random() * 100, now + 0.12);
+                gain1.gain.setValueAtTime(volume * 0.6, now);
+                gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+                osc1.connect(gain1);
+                gain1.connect(ctx.destination);
+                osc1.start(now);
+                osc1.stop(now + 0.15);
+
+                const osc2 = ctx.createOscillator();
+                const gain2 = ctx.createGain();
+                osc2.type = 'sine';
+                osc2.frequency.setValueAtTime(1200 + Math.random() * 300, now);
+                osc2.frequency.exponentialRampToValueAtTime(600, now + 0.08);
+                gain2.gain.setValueAtTime(volume * 0.2, now);
+                gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+                osc2.connect(gain2);
+                gain2.connect(ctx.destination);
+                osc2.start(now);
+                osc2.stop(now + 0.12);
+            } catch (e) {}
+        }
+
+        // ============================================================
+        // 7. ВИЗУАЛ
+        // ============================================================
+        function showFloatingText(x, y, text) {
+            const el = document.createElement('div');
+            el.className = 'float-text';
+            el.textContent = text;
+            el.style.left = (x - 30) + 'px';
+            el.style.top = (y - 30) + 'px';
+            el.style.fontSize = (24 + state.clickPower * 2) + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        function showRipple(x, y) {
+            const el = document.createElement('div');
+            el.className = 'water-ripple';
+            el.style.left = x + 'px';
+            el.style.top = y + 'px';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 700);
+        }
+
+        // ============================================================
+        // 8. ИГРОВАЯ МЕХАНИКА (продолжение)
+        // ============================================================
+        function addScore(amount, event = null) {
             if (state.score < state.target) {
-                const amount = state.autoPower + Math.floor(comboCount / 40);
                 state.score += amount;
                 state.totalClicks += amount;
+
+                comboCount++;
+                clearTimeout(comboTimer);
+                comboTimer = setTimeout(() => { comboCount = 0;
+                    updateUI(); }, 1200);
+                if (comboCount > 20) {
+                    const bonus = Math.floor(comboCount / 20);
+                    state.score += bonus;
+                    state.totalClicks += bonus;
+                }
+
+                if (state.score > state.highScore) state.highScore = state.score;
                 updateUI();
-                if (state.score >= state.target) playWaterDrop(0.25);
+
+                if (event) {
+                    const text = amount > 1 ? `+${amount}` : '+1';
+                    showFloatingText(event.clientX, event.clientY, text);
+                    showRipple(event.clientX, event.clientY);
+                }
             } else {
-                stopAutoClicker();
+                const d = document.getElementById('counterDisplay');
+                d.style.transform = 'scale(1.1)';
+                setTimeout(() => d.style.transform = 'scale(1)', 150);
             }
-        }, 500);
-        document.getElementById('autoIndicator').classList.add('active');
-        document.getElementById('autoStatus').textContent = 'Автокликер включён';
-        document.getElementById('autoBtn').textContent = '⏸ СТОП';
-        unlockAutoAchievement();
-    }
-
-    function stopAutoClicker() {
-        if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
-        isAutoRunning = false;
-        document.getElementById('autoIndicator').classList.remove('active');
-        document.getElementById('autoStatus').textContent = 'Автокликер выключен';
-        document.getElementById('autoBtn').textContent = '▶ АВТО';
-    }
-
-    function toggleAuto() {
-        if (isAutoRunning) stopAutoClicker();
-        else startAutoClicker();
-    }
-
-    const bgColors = ['#0b0f1c','#1a1f33','#2d1b33','#1b2a33','#331f1b','#1b3328','#2a1b33','#332b1b'];
-    let bgIndex = 0;
-    function changeBg() { bgIndex = (bgIndex + 1) % bgColors.length; document.body.style.background = bgColors[bgIndex]; }
-
-    function increaseTarget() {
-        state.target += 50;
-        if (state.score < state.target && state.achievements.goal) {
-            state.achievements.goal = false;
-            document.getElementById('achGoal')?.classList.remove('unlocked');
         }
-        updateUI();
-    }
 
-    function resetGame() {
-        if (!confirm('Сбросить весь прогресс?')) return;
-        if (isAutoRunning) stopAutoClicker();
-        localStorage.removeItem('clickerSave');
-        location.reload();
-    }
+        function handleClick(event) {
+            const power = state.clickPower + Math.floor(comboCount / 30);
+            addScore(power, event);
+            playWaterDrop(0.15);
+            const d = document.getElementById('counterDisplay');
+            d.classList.remove('click-effect');
+            void d.offsetWidth;
+            d.classList.add('click-effect');
+            const btn = document.getElementById('clickBtn');
+            btn.style.transform = 'scale(0.92)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 100);
+        }
 
-    // ============================================================
-    // 9. СОБЫТИЯ
-    // ============================================================
-    document.getElementById('clickBtn').addEventListener('click', handleClick);
-    document.getElementById('autoBtn').addEventListener('click', toggleAuto);
-    document.getElementById('resetBtn').addEventListener('click', resetGame);
-    document.getElementById('bgBtn').addEventListener('click', changeBg);
-    document.getElementById('targetBtn').addEventListener('click', increaseTarget);
-    document.getElementById('prestigeBtn').addEventListener('click', doPrestige);
-    document.getElementById('buyClick').addEventListener('click', buyClickPower);
-    document.getElementById('buyAuto').addEventListener('click', buyAutoPower);
+        function updateUI() {
+            const display = document.getElementById('counterDisplay');
+            const progress = document.getElementById('progressFill');
+            const targetLabel = document.getElementById('targetLabel');
+            const percentLabel = document.getElementById('progressPercent');
 
-    // ============================================================
-    // 10. ЗАПУСК
-    // ============================================================
-    loadGame();
-    updateUI();
-    setInterval(saveGame, 15000);
-</script>
+            display.textContent = state.score;
+            targetLabel.textContent = state.target;
+            const pct = Math.min((state.score / state.target) * 100, 100);
+            progress.style.width = pct + '%';
+            percentLabel.textContent = Math.round(pct) + '%';
+
+            if (state.score >= state.target) {
+                display.style.color = '#1dd1a1';
+                progress.style.background = 'linear-gradient(90deg, #1dd1a1, #30e5b5)';
+            } else {
+                display.style.color = '#74b9ff';
+                progress.style.background = 'linear-gradient(90deg, #74b9ff, #1dd1a1)';
+            }
+
+            document.getElementById('statClicks').textContent = state.totalClicks;
+            document.getElementById('statPerClick').textContent = state.clickPower;
+            document.getElementById('statPrestige').textContent = state.prestigeLevel;
+            document.getElementById('comboCount').textContent = comboCount;
+
+            const pd = document.getElementById('prestigeDisplay');
+            pd.innerHTML = state.prestigeLevel > 0 ? `<span class="prestige-badge">🌟 Престиж ${state.prestigeLevel}</span>` : '';
+
+            document.getElementById('priceClick').textContent = priceClick;
+            document.getElementById('priceAuto').textContent = priceAuto;
+
+            saveGame();
+            document.getElementById('saveStatus').textContent = '✅ Сохранено';
+            setTimeout(() => {
+                document.getElementById('saveStatus').textContent = '💾 Автосохранение включено';
+            }, 2000);
+        }
+
+        // ============================================================
+        // 9. ПРЕСТИЖ
+        // ============================================================
+        function doPrestige() {
+            if (state.score < state.target) {
+                alert(`Достигни цели (${state.target}), чтобы взять престиж!`);
+                return;
+            }
+            if (!confirm(`🌟 Перейти на новый уровень престижа?\nТекущий: ${state.prestigeLevel}\nСчёт сбросится, но ты получишь +1 к силе клика и +50 к цели!`)) return;
+
+            state.prestigeLevel++;
+            state.score = 0;
+            state.target = 100 + state.prestigeLevel * 50;
+            state.clickPower = 1 + state.prestigeLevel;
+            if (isAutoRunning) stopAutoClicker();
+            comboCount = 0;
+            updateUI();
+            playWaterDrop(0.3);
+        }
+
+        // ============================================================
+        // 10. МАГАЗИН
+        // ============================================================
+        function buyClickPower() {
+            if (state.score < priceClick) { alert(`Нужно ${priceClick} очков!`);
+                return; }
+            state.score -= priceClick;
+            state.clickPower++;
+            priceClick = Math.floor(priceClick * 1.5) + 2;
+            updateUI();
+            playWaterDrop(0.15);
+        }
+
+        function buyAutoPower() {
+            if (state.score < priceAuto) { alert(`Нужно ${priceAuto} очков!`);
+                return; }
+            state.score -= priceAuto;
+            state.autoPower++;
+            priceAuto = Math.floor(priceAuto * 1.5) + 3;
+            if (isAutoRunning) { stopAutoClicker();
+                startAutoClicker(); }
+            updateUI();
+            playWaterDrop(0.15);
+        }
+
+        // ============================================================
+        // 11. АВТОКЛИКЕР
+        // ============================================================
+        function startAutoClicker() {
+            if (isAutoRunning) return;
+            isAutoRunning = true;
+            autoInterval = setInterval(() => {
+                if (state.score < state.target) {
+                    const amount = state.autoPower + Math.floor(comboCount / 40);
+                    state.score += amount;
+                    state.totalClicks += amount;
+                    if (state.score > state.highScore) state.highScore = state.score;
+                    updateUI();
+                    if (state.score >= state.target) playWaterDrop(0.25);
+                } else {
+                    stopAutoClicker();
+                }
+            }, 500);
+            document.getElementById('autoBtn').textContent = '⏸ СТОП';
+            document.getElementById('autoBtn').classList.remove('btn-success');
+            document.getElementById('autoBtn').classList.add('btn-danger');
+        }
+
+        function stopAutoClicker() {
+            if (autoInterval) { clearInterval(autoInterval);
+                autoInterval = null; }
+            isAutoRunning = false;
+            document.getElementById('autoBtn').textContent = '▶ АВТО';
+            document.getElementById('autoBtn').classList.remove('btn-danger');
+            document.getElementById('autoBtn').classList.add('btn-success');
+        }
+
+        function toggleAuto() {
+            if (isAutoRunning) stopAutoClicker();
+            else startAutoClicker();
+        }
+
+        // ============================================================
+        // 12. ВСПОМОГАТЕЛЬНЫЕ
+        // ============================================================
+        const bgColors = ['#0b0f1c', '#1a1f33', '#2d1b33', '#1b2a33', '#331f1b', '#1b3328', '#2a1b33', '#332b1b'];
+        let bgIndex = 0;
+
+        function changeBg() { bgIndex = (bgIndex + 1) % bgColors.length;
+            document.body.style.background = bgColors[bgIndex]; }
+
+        function increaseTarget() {
+            state.target += 50;
+            updateUI();
+        }
+
+        function resetGame() {
+            if (!confirm('Сбросить весь прогресс?')) return;
+            if (isAutoRunning) stopAutoClicker();
+            localStorage.removeItem('waterClickerSave_' + currentUsername);
+            state.score = 0;
+            state.totalClicks = 0;
+            state.target = 100;
+            state.clickPower = 1;
+            state.autoPower = 1;
+            state.prestigeLevel = 0;
+            state.highScore = 0;
+            comboCount = 0;
+            priceClick = 10;
+            priceAuto = 20;
+            updateUI();
+            settingsMenu.classList.remove('open');
+            saveScoreToLeaderboard();
+        }
+
+        // ============================================================
+        // 13. НАВЕШИВАНИЕ КНОПОК
+        // ============================================================
+        document.getElementById('startBtn').addEventListener('click', startGame);
+        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+        document.getElementById('clickBtn').addEventListener('click', handleClick);
+        document.getElementById('autoBtn').addEventListener('click', toggleAuto);
+        document.getElementById('resetBtn').addEventListener('click', resetGame);
+        document.getElementById('bgBtn').addEventListener('click', changeBg);
+        document.getElementById('targetBtn').addEventListener('click', increaseTarget);
+        document.getElementById('prestigeBtn').addEventListener('click', doPrestige);
+        document.getElementById('buyClick').addEventListener('click', buyClickPower);
+        document.getElementById('buyAuto').addEventListener('click', buyAutoPower);
+
+        // ============================================================
+        // 14. МЕНЮ
+        // ============================================================
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsMenu = document.getElementById('settingsMenu');
+
+        settingsToggle.addEventListener('click', () => {
+            settingsMenu.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!settingsToggle.contains(e.target) && !settingsMenu.contains(e.target)) {
+                settingsMenu.classList.remove('open');
+            }
+        });
+
+        // ============================================================
+        // 15. ЗАПУСК
+        // ============================================================
+        console.log('✅ Water Clicker запущен!');
+    </script>
+
 </body>
 </html>
