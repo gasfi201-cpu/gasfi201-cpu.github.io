@@ -33,22 +33,33 @@
             box-shadow: 0 0 60px rgba(0, 150, 255, 0.1);
             position: relative;
         }
-        .settings-btn {
+
+        /* ===== КНОПКИ В ШАПКЕ ===== */
+        .header-buttons {
             position: absolute;
             top: 15px;
             right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+        .header-buttons button {
             background: none;
             border: none;
             color: #667799;
-            font-size: 24px;
+            font-size: 22px;
             cursor: pointer;
             transition: 0.3s;
-            z-index: 10;
         }
-        .settings-btn:hover {
+        .header-buttons button:hover {
             color: #5cb8ff;
-            transform: rotate(60deg);
+            transform: scale(1.1);
         }
+        .header-buttons .ach-btn:hover {
+            color: #ff6bc4;
+        }
+
+        /* ===== НАСТРОЙКИ ===== */
         .settings-menu {
             position: absolute;
             top: 55px;
@@ -61,7 +72,7 @@
             flex-direction: column;
             gap: 6px;
             z-index: 20;
-            min-width: 160px;
+            min-width: 170px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
         .settings-menu.open {
@@ -96,6 +107,7 @@
         .settings-menu .btn-success:hover {
             background: #3a7a4a;
         }
+
         h1 {
             font-size: 36px;
             color: #5cb8ff;
@@ -121,25 +133,17 @@
             color: #5cb8ff;
             transition: 0.1s;
         }
-        .progress-wrap {
-            background: #0a0a1a;
-            border-radius: 40px;
-            height: 10px;
-            margin: 12px 0 5px;
-            overflow: hidden;
-        }
-        #progressFill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #5cb8ff, #00d4a0);
-            border-radius: 40px;
-            transition: width 0.25s;
-        }
-        .target-info {
-            display: flex;
-            justify-content: space-between;
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin: 10px 0;
             font-size: 13px;
             color: #667799;
+        }
+        .stat-grid span {
+            color: #eee;
+            font-weight: 700;
         }
         .btn-group {
             display: flex;
@@ -206,34 +210,6 @@
         }
         .btn-purple:hover {
             background: #b088ff;
-        }
-        .btn-pink {
-            background: #ff6bc4;
-            color: #0a0a1a;
-            box-shadow: 0 4px 0 #b0408a;
-        }
-        .btn-pink:hover {
-            background: #ff88d0;
-        }
-        .btn-gold {
-            background: #f7dc6f;
-            color: #0a0a1a;
-            box-shadow: 0 4px 0 #b89c3a;
-        }
-        .btn-gold:hover {
-            background: #ffe88a;
-        }
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 8px;
-            margin: 10px 0;
-            font-size: 13px;
-            color: #667799;
-        }
-        .stat-grid span {
-            color: #eee;
-            font-weight: 700;
         }
         .shop-item {
             background: rgba(0, 0, 0, 0.4);
@@ -314,6 +290,11 @@
             text-shadow: 0 0 40px #f7dc6f;
             font-size: 44px;
         }
+        .float-text.achievement {
+            color: #ff6bc4;
+            text-shadow: 0 0 40px #ff6bc4;
+            font-size: 36px;
+        }
         .particle {
             position: fixed;
             pointer-events: none;
@@ -365,6 +346,12 @@
             border-color: #f7dc6f;
             color: #f7dc6f;
             background: rgba(247, 220, 111, 0.2);
+            animation: pulse 0.6s infinite;
+        }
+        .event-banner.achievement {
+            border-color: #ff6bc4;
+            color: #ff6bc4;
+            background: rgba(255, 107, 196, 0.2);
             animation: pulse 0.6s infinite;
         }
         @keyframes pulse {
@@ -494,12 +481,108 @@
         .pet-detail .btn-sm.feed:hover {
             background: #00f0b0;
         }
+
+        /* ===== ОКНО ДОСТИЖЕНИЙ ===== */
+        .achievement-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .achievement-overlay.open {
+            display: flex;
+        }
+        .achievement-window {
+            background: #1a2a4a;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 107, 196, 0.3);
+            box-shadow: 0 0 60px rgba(255, 107, 196, 0.1);
+            position: relative;
+        }
+        .achievement-window h2 {
+            color: #ff6bc4;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .achievement-window .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #667799;
+            font-size: 28px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .achievement-window .close-btn:hover {
+            color: #ff6b8a;
+            transform: rotate(90deg);
+        }
+        .ach-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .ach-item-window {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 14px;
+            border-radius: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #2a3a5a;
+            color: #667799;
+            transition: 0.3s;
+        }
+        .ach-item-window.unlocked {
+            border-color: #ff6bc4;
+            color: #ff6bc4;
+            background: rgba(255, 107, 196, 0.08);
+        }
+        .ach-item-window .ach-icon {
+            font-size: 20px;
+        }
+        .ach-item-window .ach-name {
+            flex: 1;
+            text-align: left;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+        .ach-item-window .ach-reward {
+            font-size: 12px;
+            color: #ffb84d;
+            margin-right: 8px;
+        }
+        .ach-item-window .ach-status {
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <button class="settings-btn" id="settingsToggle">⚙️</button>
+        <!-- ===== КНОПКИ В ШАПКЕ ===== -->
+        <div class="header-buttons">
+            <button class="ach-btn" id="achievementBtn">🏆</button>
+            <button id="settingsToggle">⚙️</button>
+        </div>
+
+        <!-- ===== НАСТРОЙКИ ===== -->
         <div class="settings-menu" id="settingsMenu">
             <button class="btn btn-danger" id="resetBtn">🔄 Сброс прогресса</button>
             <button class="btn btn-warning" id="bgSettingsBtn">🎨 Сменить фон</button>
@@ -507,16 +590,10 @@
         </div>
 
         <h1>🫧 <span>Water</span> Clicker</h1>
-        <div class="sub">~ капни на кнопку и собирай очки ~</div>
+        <div class="sub">~ бесконечный фарм капель ~</div>
 
         <div class="score-block">
             <div id="counterDisplay">0</div>
-            <div class="progress-wrap"><div id="progressFill"></div></div>
-            <div class="target-info">
-                <span>🎯 Цель: <span id="targetLabel">100</span></span>
-                <span id="progressPercent">0%</span>
-                <span>🔥 Комбо: <span id="comboCount">0</span></span>
-            </div>
             <div id="prestigeDisplay"></div>
         </div>
 
@@ -524,7 +601,7 @@
 
         <div class="stat-grid">
             <div>💧 Капель: <span id="statClicks">0</span></div>
-            <div>⚡ Кликов/сек: <span id="statCps">0</span></div>
+            <div>⚡ Капель/сек: <span id="statCps">0</span></div>
             <div>🌟 Престиж: <span id="statPrestige">0</span></div>
         </div>
 
@@ -549,28 +626,35 @@
 
             <div class="shop-item">
                 <div class="info"><span class="name">⚡ Ускорение клика</span><div class="desc">+1 к силе клика</div></div>
-                <div><span class="price" id="priceClick">10</span> <button class="btn-sm" id="buyClick">Купить</button></div>
+                <div><span class="price" id="priceClick">10 💧</span> <button class="btn-sm" id="buyClick">Купить</button>
+                </div>
             </div>
 
             <div class="shop-item">
                 <div class="info"><span class="name">🤖 Авто-капля</span><div class="desc">+1 к автокликеру</div></div>
-                <div><span class="price" id="priceAuto">20</span> <button class="btn-sm" id="buyAuto">Купить</button></div>
+                <div><span class="price" id="priceAuto">20 💧</span> <button class="btn-sm" id="buyAuto">Купить</button></div>
             </div>
 
             <div class="shop-item">
-                <div class="info"><span class="name">🎯 Увеличение цели</span><div class="desc">Цель +50 очков</div></div>
-                <div><span class="price" id="priceTarget">5</span> <button class="btn-sm" id="buyTarget">Купить</button></div>
-            </div>
-
-            <div class="shop-item">
-                <div class="info"><span class="name">💰 Множитель x2</span><div class="desc">x2 к очкам на 10 сек</div></div>
-                <div><span class="price" id="priceBoost">30</span> <button class="btn-sm" id="buyBoost">Купить</button></div>
+                <div class="info"><span class="name">💰 Множитель x2</span><div class="desc">x2 к каплям на 10 сек</div>
+                </div>
+                <div><span class="price" id="priceBoost">30 💧</span> <button class="btn-sm" id="buyBoost">Купить</button>
+                </div>
             </div>
         </div>
 
         <footer>
             💾 <span id="saveStatus">Автосохранение</span>
         </footer>
+    </div>
+
+    <!-- ===== ОКНО ДОСТИЖЕНИЙ ===== -->
+    <div class="achievement-overlay" id="achievementOverlay">
+        <div class="achievement-window">
+            <button class="close-btn" id="closeAchievementBtn">✕</button>
+            <h2>🏆 ДОСТИЖЕНИЯ</h2>
+            <div class="ach-list" id="achievementListWindow"></div>
+        </div>
     </div>
 
     <script>
@@ -580,7 +664,6 @@
         let state = {
             score: 0,
             totalClicks: 0,
-            target: 100,
             clickPower: 1,
             autoPower: 0,
             prestigeLevel: 0,
@@ -590,24 +673,67 @@
             dailyDate: '',
             pets: [],
             activePetId: null,
-            nextPetThreshold: 1000000
+            nextPetThreshold: 1000000,
+            achievements: {
+                firstDrop: false,
+                fiftyDrops: false,
+                hundredDrops: false,
+                thousandDrops: false,
+                millionDrops: false,
+                tenMillionDrops: false,
+                combo10: false,
+                combo50: false,
+                prestige1: false,
+                prestige5: false,
+                petCollector: false,
+                autoOn: false,
+                clickPower10: false
+            }
         };
 
         const PET_TYPES = [
-            { id: 'fish', emoji: '🐠', name: 'Рыбка', bonus: 0.5, feedCost: 100 },
-            { id: 'frog', emoji: '🐸', name: 'Лягушка', bonus: 1, feedCost: 250 },
-            { id: 'turtle', emoji: '🐢', name: 'Черепаха', bonus: 2, feedCost: 500 },
-            { id: 'dolphin', emoji: '🐬', name: 'Дельфин', bonus: 4, feedCost: 1000 },
-            { id: 'whale', emoji: '🐳', name: 'Кит', bonus: 8, feedCost: 2500 },
-            { id: 'dragon', emoji: '🐉', name: 'Дракон', bonus: 15, feedCost: 5000 },
-            { id: 'phoenix', emoji: '🔥', name: 'Феникс', bonus: 30, feedCost: 10000 }
+            { id: 'fish', emoji: '🐠', name: 'Рыбка', bonus: 0.4, feedCost: 100 },
+            { id: 'frog', emoji: '🐸', name: 'Лягушка', bonus: 0.8, feedCost: 250 },
+            { id: 'turtle', emoji: '🐢', name: 'Черепаха', bonus: 1.5, feedCost: 500 },
+            { id: 'dolphin', emoji: '🐬', name: 'Дельфин', bonus: 3, feedCost: 1000 },
+            { id: 'whale', emoji: '🐳', name: 'Кит', bonus: 6, feedCost: 2500 },
+            { id: 'dragon', emoji: '🐉', name: 'Дракон', bonus: 12, feedCost: 5000 },
+            { id: 'phoenix', emoji: '🔥', name: 'Феникс', bonus: 25, feedCost: 10000 }
+        ];
+
+        const ACHIEVEMENTS = [
+            { id: 'firstDrop', name: 'Первая капля', icon: '💧', reward: '+10💧', rewardFn: () => { state.score += 10; },
+                check: () => state.totalClicks >= 1 },
+            { id: 'fiftyDrops', name: '50 капель', icon: '💧', reward: '+50💧', rewardFn: () => { state.score += 50; },
+                check: () => state.totalClicks >= 50 },
+            { id: 'hundredDrops', name: '100 капель', icon: '💧', reward: '+100💧', rewardFn: () => { state.score += 100; },
+                check: () => state.totalClicks >= 100 },
+            { id: 'thousandDrops', name: '1000 капель', icon: '💧', reward: '+500💧', rewardFn: () => { state.score += 500; },
+                check: () => state.totalClicks >= 1000 },
+            { id: 'millionDrops', name: '1 000 000 капель!', icon: '💎', reward: '+1💪',
+                rewardFn: () => { state.clickPower += 1; }, check: () => state.totalClicks >= 1000000 },
+            { id: 'tenMillionDrops', name: '10 000 000 капель!', icon: '👑', reward: '+2💪',
+                rewardFn: () => { state.clickPower += 2; }, check: () => state.totalClicks >= 10000000 },
+            { id: 'combo10', name: 'Комбо x10', icon: '🔥', reward: '+100💧', rewardFn: () => { state.score += 100; },
+                check: () => comboCount >= 10 },
+            { id: 'combo50', name: 'Комбо x50', icon: '🔥', reward: '+500💧', rewardFn: () => { state.score += 500; },
+                check: () => comboCount >= 50 },
+            { id: 'prestige1', name: 'Первый престиж', icon: '🌟', reward: '+2💪',
+                rewardFn: () => { state.clickPower += 2; }, check: () => state.prestigeLevel >= 1 },
+            { id: 'prestige5', name: '5 престижей', icon: '🌟', reward: '+5💪',
+                rewardFn: () => { state.clickPower += 5; }, check: () => state.prestigeLevel >= 5 },
+            { id: 'petCollector', name: 'Коллекционер', icon: '🐾', reward: '+3💪',
+                rewardFn: () => { state.clickPower += 3; }, check: () => state.pets.length >= 3 },
+            { id: 'autoOn', name: 'Автоматизация', icon: '🤖', reward: '+2💪',
+                rewardFn: () => { state.clickPower += 2; }, check: () => isAutoRunning === true },
+            { id: 'clickPower10', name: 'Сила 10+', icon: '💪', reward: '+1000💧',
+                rewardFn: () => { state.score += 1000; }, check: () => state.clickPower >= 10 }
         ];
 
         let autoInterval = null;
         let isAutoRunning = false;
         let priceClick = 10;
         let priceAuto = 20;
-        let priceTarget = 5;
         let priceBoost = 30;
         let comboCount = 0;
         let comboTimer = null;
@@ -626,7 +752,6 @@
                     const data = JSON.parse(saved);
                     state.score = data.score || 0;
                     state.totalClicks = data.totalClicks || 0;
-                    state.target = data.target || 100;
                     state.clickPower = data.clickPower || 1;
                     state.autoPower = data.autoPower || 0;
                     state.prestigeLevel = data.prestigeLevel || 0;
@@ -636,9 +761,9 @@
                     state.pets = data.pets || [];
                     state.activePetId = data.activePetId || null;
                     state.nextPetThreshold = data.nextPetThreshold || 1000000;
+                    state.achievements = data.achievements || state.achievements;
                     priceClick = data.priceClick || 10;
                     priceAuto = data.priceAuto || 20;
-                    priceTarget = data.priceTarget || 5;
                     priceBoost = data.priceBoost || 30;
                 } catch (e) {}
             }
@@ -651,7 +776,6 @@
             const data = {
                 score: state.score,
                 totalClicks: state.totalClicks,
-                target: state.target,
                 clickPower: state.clickPower,
                 autoPower: state.autoPower,
                 prestigeLevel: state.prestigeLevel,
@@ -661,16 +785,55 @@
                 pets: state.pets,
                 activePetId: state.activePetId,
                 nextPetThreshold: state.nextPetThreshold,
+                achievements: state.achievements,
                 priceClick: priceClick,
                 priceAuto: priceAuto,
-                priceTarget: priceTarget,
                 priceBoost: priceBoost
             };
             localStorage.setItem('waterClickerSave', JSON.stringify(data));
         }
 
         // ============================================================
-        // 3. ПИТОМЦЫ
+        // 3. ДОСТИЖЕНИЯ (ОКНО)
+        // ============================================================
+        function renderAchievementsWindow() {
+            const list = document.getElementById('achievementListWindow');
+            let html = '';
+            ACHIEVEMENTS.forEach(a => {
+                const unlocked = state.achievements[a.id] || false;
+                html += `<div class="ach-item-window ${unlocked ? 'unlocked' : ''}">
+                            <span class="ach-icon">${a.icon}</span>
+                            <span class="ach-name">${a.name}</span>
+                            <span class="ach-reward">${unlocked ? '✅ ' + a.reward : '🔒 ' + a.reward}</span>
+                            <span class="ach-status">${unlocked ? '✅' : '🔒'}</span>
+                        </div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function checkAchievements() {
+            let unlocked = false;
+            ACHIEVEMENTS.forEach(a => {
+                if (!state.achievements[a.id] && a.check()) {
+                    state.achievements[a.id] = true;
+                    unlocked = true;
+                    // Награда
+                    if (a.rewardFn) a.rewardFn();
+                    showEvent(`🏆 Достижение: ${a.icon} ${a.name}! Награда: ${a.reward}`, 'achievement');
+                    spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30, '#ff6bc4');
+                    showFloatingText(window.innerWidth / 2 - 60, window.innerHeight / 2 - 80,
+                        `${a.icon} ${a.name} +${a.reward}`, 'achievement');
+                    saveGame();
+                    updateUI();
+                }
+            });
+            if (unlocked) {
+                renderAchievementsWindow();
+            }
+        }
+
+        // ============================================================
+        // 4. ПИТОМЦЫ
         // ============================================================
         function checkPetUnlock() {
             while (state.totalClicks >= state.nextPetThreshold) {
@@ -718,7 +881,6 @@
             });
             list.innerHTML = html;
 
-            // Клик по питомцу
             document.querySelectorAll('.pet-item').forEach(el => {
                 el.addEventListener('click', () => {
                     const id = el.dataset.id;
@@ -726,7 +888,6 @@
                 });
             });
 
-            // Показываем детали активного питомца
             if (state.activePetId) {
                 const pet = state.pets.find(p => p.id === state.activePetId);
                 if (pet) showPetDetail(pet);
@@ -755,7 +916,7 @@
                             <div class="desc">До след. уровня: ${Math.floor(100 - pet.exp)}%</div>
                         </div>
                         <div>
-                            <button class="btn-sm feed" id="feedPetBtn">🍖 Кормить (${pet.feedCost})</button>
+                            <button class="btn-sm feed" id="feedPetBtn">🍖 Кормить (${pet.feedCost} 💧)</button>
                         </div>
                     `;
             document.getElementById('feedPetBtn').addEventListener('click', () => feedPet(pet.id));
@@ -765,7 +926,7 @@
             const pet = state.pets.find(p => p.id === id);
             if (!pet) return;
             if (state.score < pet.feedCost) {
-                showEvent(`🍖 Не хватает ${pet.feedCost} очков!`, 'bad');
+                showEvent(`🍖 Не хватает ${pet.feedCost} капель!`, 'bad');
                 return;
             }
             state.score -= pet.feedCost;
@@ -778,7 +939,6 @@
                 showEvent(`🎉 ${pet.emoji} ${pet.name} достиг ${pet.level} уровня!`, 'good');
                 spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30, '#f7dc6f');
             }
-            // Голод со временем падает (проверяется при кликах)
             saveGame();
             updateUI();
             renderPets();
@@ -790,13 +950,12 @@
             if (!state.activePetId) return 0;
             const pet = state.pets.find(p => p.id === state.activePetId);
             if (!pet) return 0;
-            // Голод уменьшает бонус
             const hungerPenalty = Math.max(0, (100 - pet.hunger) / 100 * 0.5);
             return pet.bonus * pet.level * (1 - hungerPenalty);
         }
 
         // ============================================================
-        // 4. ЕЖЕДНЕВНЫЙ БОНУС
+        // 5. ЕЖЕДНЕВНЫЙ БОНУС
         // ============================================================
         function checkDailyBonus() {
             const today = new Date().toDateString();
@@ -818,14 +977,14 @@
                 showEvent('⏰ Бонус уже получен сегодня!', 'bad');
                 return;
             }
-            const bonus = 100 + state.prestigeLevel * 20;
+            const bonus = 50 + state.prestigeLevel * 10;
             state.score += bonus;
             state.totalClicks += bonus;
             state.dailyClaimed = true;
             state.dailyDate = new Date().toDateString();
             saveGame();
             updateUI();
-            showEvent(`🎁 Ежедневный бонус: +${bonus} очков!`, 'good');
+            showEvent(`🎁 Ежедневный бонус: +${bonus} капель!`, 'good');
             spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 30, '#ffb84d');
             document.getElementById('dailyBtn').textContent = '✅ ДЕНЬ';
             document.getElementById('dailyBtn').classList.remove('btn-warning');
@@ -833,7 +992,7 @@
         }
 
         // ============================================================
-        // 5. ЗВУК
+        // 6. ЗВУК
         // ============================================================
         function playWaterDrop() {
             if (!soundEnabled) return;
@@ -854,7 +1013,7 @@
         }
 
         // ============================================================
-        // 6. ВИЗУАЛ
+        // 7. ВИЗУАЛ
         // ============================================================
         function showFloatingText(x, y, text, type = 'normal') {
             const el = document.createElement('div');
@@ -863,6 +1022,7 @@
             if (type === 'bad') el.classList.add('bad');
             if (type === 'crit') el.classList.add('crit');
             if (type === 'pet') el.classList.add('pet');
+            if (type === 'achievement') el.classList.add('achievement');
             el.textContent = text;
             el.style.left = (x - 30) + 'px';
             el.style.top = (y - 30) + 'px';
@@ -920,7 +1080,15 @@
         }
 
         // ============================================================
-        // 7. ИГРОВАЯ МЕХАНИКА
+        // 8. ПРЕСТИЖ
+        // ============================================================
+        function getPrestigeCost() {
+            if (state.prestigeLevel === 0) return 50;
+            return 50 * Math.pow(2, state.prestigeLevel);
+        }
+
+        // ============================================================
+        // 9. ИГРОВАЯ МЕХАНИКА
         // ============================================================
         function getMultiplier() {
             let mult = 1;
@@ -930,65 +1098,56 @@
 
         function addScore(amount, event = null) {
             const petBonus = getPetBonus();
-            const totalPower = state.clickPower + petBonus + Math.floor(comboCount / 15);
+            const totalPower = state.clickPower + petBonus + Math.floor(comboCount / 20);
             let finalAmount = totalPower * getMultiplier();
             let isCrit = false;
 
             if (Math.random() < 0.05) {
-                finalAmount *= 5;
+                finalAmount *= 4;
                 isCrit = true;
             }
 
-            if (state.score < state.target) {
-                state.score += finalAmount;
-                state.totalClicks += amount || totalPower;
+            state.score += finalAmount;
+            state.totalClicks += amount || totalPower;
 
-                // Проверяем голод питомцев (каждый клик уменьшает голод)
-                state.pets.forEach(p => {
-                    p.hunger = Math.max(0, p.hunger - 0.02);
-                });
+            state.pets.forEach(p => {
+                p.hunger = Math.max(0, p.hunger - 0.02);
+            });
 
-                comboCount++;
-                clearTimeout(comboTimer);
-                comboTimer = setTimeout(() => { comboCount = 0;
-                    updateUI(); }, 1500);
+            comboCount++;
+            clearTimeout(comboTimer);
+            comboTimer = setTimeout(() => { comboCount = 0;
+                updateUI(); }, 1500);
 
-                if (comboCount > 0 && comboCount % 10 === 0) {
-                    const bonus = Math.floor(comboCount / 5);
-                    state.score += bonus;
-                    state.totalClicks += bonus;
-                    if (event) showFloatingText(event.clientX - 40, event.clientY - 80, `🔥 +${bonus} комбо!`, 'bonus');
-                    spawnParticles(event.clientX, event.clientY, 20);
-                }
+            if (comboCount > 0 && comboCount % 10 === 0) {
+                const bonus = Math.floor(comboCount / 6);
+                state.score += bonus;
+                state.totalClicks += bonus;
+                if (event) showFloatingText(event.clientX - 40, event.clientY - 80, `🔥 +${bonus} комбо!`, 'bonus');
+                spawnParticles(event.clientX, event.clientY, 20);
+            }
 
-                if (state.score > state.highScore) state.highScore = state.score;
+            if (state.score > state.highScore) state.highScore = state.score;
 
-                // Случайное событие (2% шанс)
-                if (Math.random() < 0.02 && event) {
-                    const bonus = Math.floor(state.target * 0.1) + 10;
-                    state.score += bonus;
-                    state.totalClicks += bonus;
-                    showEvent(`🎉 Событие! +${bonus} очков!`, 'good');
-                    spawnParticles(event.clientX, event.clientY, 25);
-                }
+            if (Math.random() < 0.015 && event) {
+                const bonus = Math.floor(state.totalClicks * 0.01) + 10;
+                state.score += bonus;
+                state.totalClicks += bonus;
+                showEvent(`🎉 Событие! +${bonus} капель!`, 'good');
+                spawnParticles(event.clientX, event.clientY, 25);
+            }
 
-                // Проверяем питомцев
-                checkPetUnlock();
+            checkPetUnlock();
+            checkAchievements();
 
-                updateUI();
+            updateUI();
 
-                if (event) {
-                    let text = totalPower > 1 ? `+${Math.floor(finalAmount)}` : '+1';
-                    if (getMultiplier() > 1) text += ' x2!';
-                    if (isCrit) text = '💥 КРИТ! +' + Math.floor(finalAmount);
-                    showFloatingText(event.clientX, event.clientY, text, isCrit ? 'crit' : 'normal');
-                    spawnParticles(event.clientX, event.clientY, isCrit ? 20 : 6);
-                }
-            } else {
-                const d = document.getElementById('counterDisplay');
-                d.style.transform = 'scale(1.1)';
-                setTimeout(() => d.style.transform = 'scale(1)', 150);
-                if (event) showFloatingText(event.clientX, event.clientY, '🎯 Цель!', 'bonus');
+            if (event) {
+                let text = totalPower > 1 ? `+${Math.floor(finalAmount)}` : '+1';
+                if (getMultiplier() > 1) text += ' x2!';
+                if (isCrit) text = '💥 КРИТ! +' + Math.floor(finalAmount);
+                showFloatingText(event.clientX, event.clientY, text, isCrit ? 'crit' : 'normal');
+                spawnParticles(event.clientX, event.clientY, isCrit ? 20 : 6);
             }
         }
 
@@ -1005,7 +1164,6 @@
             btn.style.transform = 'scale(0.92)';
             setTimeout(() => btn.style.transform = 'scale(1)', 100);
 
-            // Обновляем детали питомца если активен
             if (state.activePetId) {
                 const pet = state.pets.find(p => p.id === state.activePetId);
                 if (pet) showPetDetail(pet);
@@ -1014,23 +1172,7 @@
 
         function updateUI() {
             const display = document.getElementById('counterDisplay');
-            const progress = document.getElementById('progressFill');
-            const targetLabel = document.getElementById('targetLabel');
-            const percentLabel = document.getElementById('progressPercent');
-
             display.textContent = Math.floor(state.score);
-            targetLabel.textContent = state.target;
-            const pct = Math.min((state.score / state.target) * 100, 100);
-            progress.style.width = pct + '%';
-            percentLabel.textContent = Math.round(pct) + '%';
-
-            if (state.score >= state.target) {
-                display.style.color = '#00d4a0';
-                progress.style.background = 'linear-gradient(90deg, #00d4a0, #ffb84d)';
-            } else {
-                display.style.color = '#5cb8ff';
-                progress.style.background = 'linear-gradient(90deg, #5cb8ff, #00d4a0)';
-            }
 
             document.getElementById('statClicks').textContent = state.totalClicks;
             document.getElementById('statPrestige').textContent = state.prestigeLevel;
@@ -1044,11 +1186,12 @@
             let badgeText = state.prestigeLevel > 0 ? `🌟 Престиж ${state.prestigeLevel}` : '';
             const petBonus = getPetBonus();
             if (petBonus > 0) badgeText += ` 🐾 +${petBonus.toFixed(1)}`;
+            const cost = getPrestigeCost();
+            badgeText += ` | 🎯 Престиж: ${cost} 💧`;
             pd.innerHTML = badgeText ? `<span class="prestige-badge">${badgeText}</span>` : '';
 
             document.getElementById('priceClick').textContent = priceClick;
             document.getElementById('priceAuto').textContent = priceAuto;
-            document.getElementById('priceTarget').textContent = priceTarget;
             document.getElementById('priceBoost').textContent = priceBoost;
 
             saveGame();
@@ -1059,36 +1202,37 @@
         }
 
         // ============================================================
-        // 8. ПРЕСТИЖ
+        // 10. ПРЕСТИЖ
         // ============================================================
         function doPrestige() {
-            if (state.score < state.target) {
-                alert(`Достигни цели (${state.target}), чтобы взять престиж!`);
+            const cost = getPrestigeCost();
+            if (state.score < cost) {
+                alert(`Нужно ${cost} капель для престижа!`);
                 return;
             }
-            if (!confirm(`🌟 Перейти на новый уровень престижа?\nТекущий: ${state.prestigeLevel}\nСчёт сбросится, но ты получишь +1 к силе клика и +50 к цели!`)) return;
+            if (!confirm(`🌟 Перейти на новый уровень престижа?\nТекущий: ${state.prestigeLevel}\nНужно: ${cost} капель\nСчёт сбросится, но ты получишь +1 к силе клика!`)) return;
 
             state.prestigeLevel++;
             state.score = 0;
-            state.target = 100 + state.prestigeLevel * 50;
             state.clickPower = 1 + state.prestigeLevel;
             if (isAutoRunning) stopAutoClicker();
             comboCount = 0;
             updateUI();
             playWaterDrop();
-            showEvent(`🌟 Престиж ${state.prestigeLevel}!`, 'good');
+            showEvent(`🌟 Престиж ${state.prestigeLevel}! +1 к силе!`, 'good');
             spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 50);
+            checkAchievements();
         }
 
         // ============================================================
-        // 9. МАГАЗИН
+        // 11. МАГАЗИН
         // ============================================================
         function buyClickPower() {
-            if (state.score < priceClick) { alert(`Нужно ${priceClick} очков!`);
+            if (state.score < priceClick) { alert(`Нужно ${priceClick} капель!`);
                 return; }
             state.score -= priceClick;
             state.clickPower++;
-            priceClick = Math.floor(priceClick * 1.6) + 3;
+            priceClick = Math.floor(priceClick * 1.7) + 5;
             updateUI();
             playWaterDrop();
             showEvent(`⚡ Сила клика: ${state.clickPower}`, 'good');
@@ -1096,11 +1240,11 @@
         }
 
         function buyAutoPower() {
-            if (state.score < priceAuto) { alert(`Нужно ${priceAuto} очков!`);
+            if (state.score < priceAuto) { alert(`Нужно ${priceAuto} капель!`);
                 return; }
             state.score -= priceAuto;
             state.autoPower++;
-            priceAuto = Math.floor(priceAuto * 1.6) + 5;
+            priceAuto = Math.floor(priceAuto * 1.7) + 8;
             if (isAutoRunning) { stopAutoClicker();
                 startAutoClicker(); }
             updateUI();
@@ -1109,24 +1253,13 @@
             spawnParticles(window.innerWidth / 2, window.innerHeight / 2, 15);
         }
 
-        function buyTarget() {
-            if (state.score < priceTarget) { alert(`Нужно ${priceTarget} очков!`);
-                return; }
-            state.score -= priceTarget;
-            state.target += 50;
-            priceTarget = Math.floor(priceTarget * 1.5) + 3;
-            updateUI();
-            playWaterDrop();
-            showEvent(`🎯 Цель увеличена до ${state.target}`, 'good');
-        }
-
         function buyBoost() {
-            if (state.score < priceBoost) { alert(`Нужно ${priceBoost} очков!`);
+            if (state.score < priceBoost) { alert(`Нужно ${priceBoost} капель!`);
                 return; }
             if (state.boostActive) { alert('Множитель уже активен!'); return; }
             state.score -= priceBoost;
             state.boostActive = true;
-            priceBoost = Math.floor(priceBoost * 1.8) + 5;
+            priceBoost = Math.floor(priceBoost * 1.9) + 10;
             updateUI();
             playWaterDrop();
             showEvent(`💰 x2 активирован на 10 секунд!`, 'good');
@@ -1141,35 +1274,29 @@
         }
 
         // ============================================================
-        // 10. АВТОКЛИКЕР
+        // 12. АВТОКЛИКЕР
         // ============================================================
         function startAutoClicker() {
             if (isAutoRunning) return;
             isAutoRunning = true;
             autoInterval = setInterval(() => {
-                if (state.score < state.target) {
-                    const petBonus = getPetBonus();
-                    const totalPower = state.autoPower + petBonus + Math.floor(comboCount / 40);
-                    const amount = totalPower * getMultiplier();
-                    state.score += amount;
-                    state.totalClicks += totalPower;
-                    if (state.score > state.highScore) state.highScore = state.score;
-                    state.pets.forEach(p => {
-                        p.hunger = Math.max(0, p.hunger - 0.01);
-                    });
-                    checkPetUnlock();
-                    updateUI();
-                    if (state.score >= state.target) {
-                        playWaterDrop();
-                        showEvent('🎯 Цель достигнута!', 'good');
-                    }
-                } else {
-                    stopAutoClicker();
-                }
-            }, 800);
+                const petBonus = getPetBonus();
+                const totalPower = state.autoPower + petBonus + Math.floor(comboCount / 50);
+                const amount = totalPower * getMultiplier();
+                state.score += amount;
+                state.totalClicks += totalPower;
+                if (state.score > state.highScore) state.highScore = state.score;
+                state.pets.forEach(p => {
+                    p.hunger = Math.max(0, p.hunger - 0.01);
+                });
+                checkPetUnlock();
+                checkAchievements();
+                updateUI();
+            }, 1000);
             document.getElementById('autoBtn').textContent = '⏸ СТОП';
             document.getElementById('autoBtn').classList.remove('btn-success');
             document.getElementById('autoBtn').classList.add('btn-danger');
+            checkAchievements();
         }
 
         function stopAutoClicker() {
@@ -1187,7 +1314,7 @@
         }
 
         // ============================================================
-        // 11. НАСТРОЙКИ
+        // 13. НАСТРОЙКИ
         // ============================================================
         const bgColors = ['#0a0a1a', '#0d1b2a', '#1a0a1a', '#0a1a1a', '#1a1a0a', '#0a0a2a', '#1a0a2a', '#0a2a1a'];
         let bgIndex = 0;
@@ -1211,7 +1338,7 @@
         }
 
         // ============================================================
-        // 12. МЕНЮ НАСТРОЕК
+        // 14. МЕНЮ
         // ============================================================
         const settingsToggle = document.getElementById('settingsToggle');
         const settingsMenu = document.getElementById('settingsMenu');
@@ -1230,8 +1357,23 @@
         document.getElementById('bgSettingsBtn').addEventListener('click', changeBg);
         document.getElementById('soundToggleBtn').addEventListener('click', toggleSound);
 
+        // ===== ДОСТИЖЕНИЯ (отдельная кнопка) =====
+        document.getElementById('achievementBtn').addEventListener('click', () => {
+            const overlay = document.getElementById('achievementOverlay');
+            overlay.classList.toggle('open');
+            renderAchievementsWindow();
+        });
+        document.getElementById('closeAchievementBtn').addEventListener('click', () => {
+            document.getElementById('achievementOverlay').classList.remove('open');
+        });
+        document.getElementById('achievementOverlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                document.getElementById('achievementOverlay').classList.remove('open');
+            }
+        });
+
         // ============================================================
-        // 13. НАВЕШИВАНИЕ КНОПОК
+        // 15. НАВЕШИВАНИЕ КНОПОК
         // ============================================================
         document.getElementById('clickBtn').addEventListener('click', handleClick);
         document.getElementById('autoBtn').addEventListener('click', toggleAuto);
@@ -1239,14 +1381,14 @@
         document.getElementById('dailyBtn').addEventListener('click', claimDailyBonus);
         document.getElementById('buyClick').addEventListener('click', buyClickPower);
         document.getElementById('buyAuto').addEventListener('click', buyAutoPower);
-        document.getElementById('buyTarget').addEventListener('click', buyTarget);
         document.getElementById('buyBoost').addEventListener('click', buyBoost);
 
         // ============================================================
-        // 14. ЗАПУСК
+        // 16. ЗАПУСК
         // ============================================================
         loadGame();
         renderPets();
+        renderAchievementsWindow();
         console.log('✅ Water Clicker запущен!');
     </script>
 
