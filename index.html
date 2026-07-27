@@ -2,75 +2,375 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Мой стильный сайт</title>
+    <title>Супер-Кликер 🚀</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
-            background-color: #f0f8ff;
-            font-family: Arial, sans-serif;
+            background: linear-gradient(145deg, #0b0f1c, #1a1f33);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
-            padding: 50px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.5s;
+        }
+        .game-container {
+            background: rgba(22, 33, 62, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 40px 50px;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            max-width: 500px;
+            width: 100%;
         }
         h1 {
-            color: #2c3e50;
-            font-size: 40px;
-            border-bottom: 3px solid #3498db;
-            display: inline-block;
-            padding-bottom: 10px;
+            font-size: 28px;
+            color: #e94560;
+            text-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+            margin-bottom: 10px;
         }
-        ul {
-            list-style: none;
-            padding: 0;
+        .subtitle {
+            color: #8888aa;
+            margin-bottom: 30px;
+            font-size: 14px;
+            letter-spacing: 1px;
         }
-        li {
-            background: #3498db;
+        .score-block {
+            background: #0f1424;
+            border-radius: 30px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .score-label {
+            font-size: 14px;
+            color: #aaaacc;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        #counterDisplay {
+            font-size: 72px;
+            font-weight: 900;
+            color: #e94560;
+            line-height: 1;
+            transition: 0.15s;
+            text-shadow: 0 0 30px rgba(233, 69, 96, 0.2);
+        }
+        .progress-wrap {
+            background: #0b0f1c;
+            border-radius: 40px;
+            height: 12px;
+            margin: 20px 0 10px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+        }
+        #progressFill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #e94560, #ff6b81);
+            border-radius: 40px;
+            transition: width 0.2s ease;
+            box-shadow: 0 0 20px #e94560;
+        }
+        .target-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #666688;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 25px 0 15px;
+        }
+        .btn {
+            border: none;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #2a2f4a;
             color: white;
-            padding: 10px 20px;
-            margin: 5px auto;
-            max-width: 300px;
-            border-radius: 20px;
+            flex: 1 0 auto;
+            min-width: 120px;
+            box-shadow: 0 4px 0 #0f1424;
         }
-        img {
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            margin: 20px 0;
+        .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 0 #0f1424;
+        }
+        .btn-primary {
+            background: #e94560;
+            box-shadow: 0 4px 0 #aa3348;
+        }
+        .btn-primary:hover {
+            background: #ff5a7a;
+        }
+        .btn-success {
+            background: #1dd1a1;
+            color: #0b0f1c;
+            box-shadow: 0 4px 0 #0f8b6e;
+        }
+        .btn-success:hover {
+            background: #30e5b5;
+        }
+        .btn-danger {
+            background: #533483;
+            box-shadow: 0 4px 0 #3a255a;
+        }
+        .btn-danger:hover {
+            background: #6a46a0;
+        }
+        .btn-warning {
+            background: #f39c12;
+            color: #0b0f1c;
+            box-shadow: 0 4px 0 #b06d0b;
+        }
+        .btn-warning:hover {
+            background: #fdcb6e;
+        }
+        .btn:disabled {
+            opacity: 0.4;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #0f1424;
+            cursor: not-allowed;
+        }
+        .click-effect {
+            animation: pop 0.15s ease;
+        }
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); color: #fff; }
+            100% { transform: scale(1); }
+        }
+        .auto-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 8px;
             transition: 0.3s;
-            width: 300px;
         }
-        /* МАГИЯ: при наведении на картинку */
-        img:hover {
-            background-color: #ffeaa7;
-            padding: 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        .auto-indicator.active {
+            background: #1dd1a1;
+            box-shadow: 0 0 15px #1dd1a1;
         }
-        a {
-            color: #e74c3c;
-            font-weight: bold;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        a:hover {
-            text-decoration: underline;
-            color: #c0392b;
+        footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #444466;
         }
     </style>
 </head>
 <body>
 
-    <h1>Привет! Арина лох!</h1>
+<div class="game-container">
 
-    <p>Сегодня я научился:</p>
-    <ul>
-        <li>Открывать VS Code</li>
-        <li>Писать что Арина лох</li>
-        <li>Смотреть на результат в браузере</li>
-    </ul>
+    <h1>⚡ КЛИКЕР 2.0</h1>
+    <div class="subtitle">нажми на кнопку, чтобы набрать очки</div>
 
-    <a href="https://img.freepik.com/free-vector/cute-cat-working-on-laptop-cartoon-vector-icon-illustration-animal-education-icon-isolated_138676-6701.jpg" target="_blank">
-        <img src="https://img.freepik.com/free-vector/cute-cat-working-on-laptop-cartoon-vector-icon-illustration-animal-education-icon-isolated_138676-6701.jpg" alt="Котик за ноутбуком">
-    </a>
+    <div class="score-block" id="scoreBlock">
+        <div class="score-label">Твой счёт</div>
+        <div id="counterDisplay">0</div>
+        <div class="progress-wrap">
+            <div id="progressFill"></div>
+        </div>
+        <div class="target-info">
+            <span>Цель: <span id="targetLabel">100</span></span>
+            <span id="progressPercent">0%</span>
+        </div>
+    </div>
 
-    <br>
-    <a href="https://www.youtube.com/results?search_query=html+для+начинающих" target="_blank">Смотреть уроки по HTML</a>
+    <div class="button-group">
+        <button class="btn btn-primary" id="clickBtn">👆 КЛИК!</button>
+        <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
+        <button class="btn btn-danger" id="resetBtn">🔄 СБРОС</button>
+    </div>
+    <div class="button-group">
+        <button class="btn btn-warning" id="bgBtn">🎨 ФОН</button>
+        <button class="btn" id="targetBtn" style="background:#2d3a5a;">🎯 ЦЕЛЬ +50</button>
+    </div>
+
+    <footer>
+        <span class="auto-indicator" id="autoIndicator"></span>
+        <span id="autoStatus">Автокликер выключен</span>
+    </footer>
+</div>
+
+<script>
+    // ============================================================
+    // 1. ВСЕ ПЕРЕМЕННЫЕ
+    // ============================================================
+    let score = 0;
+    let target = 100;
+    let autoInterval = null;
+    let isAutoRunning = false;
+
+    // Элементы
+    const displayEl = document.getElementById('counterDisplay');
+    const progressFill = document.getElementById('progressFill');
+    const targetLabel = document.getElementById('targetLabel');
+    const progressPercent = document.getElementById('progressPercent');
+    const scoreBlock = document.getElementById('scoreBlock');
+
+    const clickBtn = document.getElementById('clickBtn');
+    const autoBtn = document.getElementById('autoBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const bgBtn = document.getElementById('bgBtn');
+    const targetBtn = document.getElementById('targetBtn');
+
+    const autoIndicator = document.getElementById('autoIndicator');
+    const autoStatus = document.getElementById('autoStatus');
+
+    // Массив цветов для фона
+    const bgColors = [
+        '#0b0f1c', '#1a1f33', '#2d1b33', '#1b2a33',
+        '#331f1b', '#1b3328', '#2a1b33', '#332b1b'
+    ];
+
+    // ============================================================
+    // 2. ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+    // ============================================================
+    function updateUI() {
+        // Текст счёта
+        displayEl.textContent = score;
+
+        // Прогресс-бар
+        let percent = Math.min((score / target) * 100, 100);
+        progressFill.style.width = percent + '%';
+        progressPercent.textContent = Math.round(percent) + '%';
+
+        // Меняем цвет цифры и полоски при достижении цели
+        if (score >= target) {
+            displayEl.style.color = '#1dd1a1';
+            progressFill.style.background = 'linear-gradient(90deg, #1dd1a1, #30e5b5)';
+        } else {
+            displayEl.style.color = '#e94560';
+            progressFill.style.background = 'linear-gradient(90deg, #e94560, #ff6b81)';
+        }
+
+        // Анимация "поп" при клике — добавляем класс и убираем
+        displayEl.classList.remove('click-effect');
+        // форсируем перерисовку, чтобы анимация сработала повторно
+        void displayEl.offsetWidth;
+        displayEl.classList.add('click-effect');
+    }
+
+    // ============================================================
+    // 3. ФУНКЦИЯ КЛИКА (основная)
+    // ============================================================
+    function handleClick() {
+        if (score < target) {
+            score++;
+            updateUI();
+        } else {
+            // Если цель уже достигнута, всё равно приятно пощёлкать, но счёт не растёт
+            // Можно добавить вибрацию, но оставим просто эффект
+            displayEl.style.transform = 'scale(1.1)';
+            setTimeout(() => { displayEl.style.transform = 'scale(1)'; }, 150);
+        }
+    }
+
+    // ============================================================
+    // 4. СБРОС
+    // ============================================================
+    function resetGame() {
+        // Останавливаем автокликер, если он включён
+        if (isAutoRunning) {
+            stopAutoClicker();
+        }
+        score = 0;
+        updateUI();
+        // возвращаем цвет цели на красный
+        displayEl.style.color = '#e94560';
+        progressFill.style.background = 'linear-gradient(90deg, #e94560, #ff6b81)';
+    }
+
+    // ============================================================
+    // 5. АВТОКЛИКЕР
+    // ============================================================
+    function startAutoClicker() {
+        if (isAutoRunning) return;
+        isAutoRunning = true;
+        autoInterval = setInterval(() => {
+            if (score < target) {
+                score++;
+                updateUI();
+            } else {
+                // Если достигли цели — автокликер сам останавливается
+                stopAutoClicker();
+            }
+        }, 300); // каждые 300 мс = 3.3 клика в секунду
+
+        autoIndicator.classList.add('active');
+        autoStatus.textContent = 'Автокликер включён';
+        autoBtn.textContent = '⏸ СТОП';
+    }
+
+    function stopAutoClicker() {
+        if (autoInterval) {
+            clearInterval(autoInterval);
+            autoInterval = null;
+        }
+        isAutoRunning = false;
+        autoIndicator.classList.remove('active');
+        autoStatus.textContent = 'Автокликер выключен';
+        autoBtn.textContent = '▶ АВТО';
+    }
+
+    function toggleAutoClicker() {
+        if (isAutoRunning) {
+            stopAutoClicker();
+        } else {
+            startAutoClicker();
+        }
+    }
+
+    // ============================================================
+    // 6. СМЕНА ФОНА
+    // ============================================================
+    function changeBackground() {
+        const randomIndex = Math.floor(Math.random() * bgColors.length);
+        document.body.style.background = bgColors[randomIndex];
+    }
+
+    // ============================================================
+    // 7. УВЕЛИЧЕНИЕ ЦЕЛИ
+    // ============================================================
+    function increaseTarget() {
+        target += 50;
+        targetLabel.textContent = target;
+        updateUI();
+    }
+
+    // ============================================================
+    // 8. НАВЕШИВАЕМ ОБРАБОТЧИКИ СОБЫТИЙ
+    // ============================================================
+    clickBtn.addEventListener('click', handleClick);
+    resetBtn.addEventListener('click', resetGame);
+    autoBtn.addEventListener('click', toggleAutoClicker);
+    bgBtn.addEventListener('click', changeBackground);
+    targetBtn.addEventListener('click', increaseTarget);
+
+    // ============================================================
+    // 9. СТАРТОВЫЙ ВЫЗОВ
+    // ============================================================
+    updateUI();
+
+    // Бонус: если достиг цели, а цель увеличили — обновить цвет
+    // для этого просто обновляем UI при изменении цели
+</script>
 
 </body>
 </html>
