@@ -463,7 +463,7 @@
         .container {
             background: rgba(20, 30, 60, 0.85);
             backdrop-filter: blur(8px);
-            padding: 15px;
+            padding: 12px 15px 15px 15px;
             border-radius: 30px;
             border: 1px solid rgba(100, 180, 255, 0.25);
             max-width: 500px;
@@ -478,13 +478,31 @@
             width: 0;
         }
 
-        .header-buttons {
-            position: absolute;
-            top: 10px;
-            right: 15px;
+        /* ===== ЗАГОЛОВОК И КНОПКИ ===== */
+        .header-wrapper {
             display: flex;
-            gap: 8px;
-            z-index: 10;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+            padding-right: 5px;
+        }
+        .header-wrapper h1 {
+            font-size: 26px;
+            color: #5cb8ff;
+            text-shadow: 0 0 40px rgba(0, 150, 255, 0.3);
+            margin: 0;
+            line-height: 1.2;
+            flex: 1;
+            text-align: left;
+        }
+        .header-wrapper h1 span {
+            color: #ff6b8a;
+        }
+        .header-buttons {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+            margin-left: 8px;
         }
         .header-buttons button {
             background: none;
@@ -493,15 +511,25 @@
             font-size: 18px;
             cursor: pointer;
             transition: 0.3s;
-            padding: 4px;
+            padding: 4px 6px;
+            border-radius: 8px;
+            line-height: 1;
         }
         .header-buttons button:hover {
             color: #5cb8ff;
+            background: rgba(92, 184, 255, 0.1);
+        }
+
+        .sub {
+            color: #8899bb;
+            font-size: 11px;
+            margin-bottom: 8px;
+            text-align: left;
         }
 
         .settings-menu {
             position: absolute;
-            top: 45px;
+            top: 50px;
             right: 15px;
             background: #1a2a4a;
             border: 1px solid #2a4a6a;
@@ -545,21 +573,6 @@
         }
         .settings-menu .btn-success:hover {
             background: #3a7a4a;
-        }
-
-        h1 {
-            font-size: 28px;
-            color: #5cb8ff;
-            text-shadow: 0 0 40px rgba(0, 150, 255, 0.3);
-            margin-top: 5px;
-        }
-        h1 span {
-            color: #ff6b8a;
-        }
-        .sub {
-            color: #8899bb;
-            font-size: 11px;
-            margin-bottom: 8px;
         }
 
         .score-block {
@@ -977,10 +990,14 @@
 
         @media (max-height: 700px) {
             .container {
-                padding: 10px;
+                padding: 8px 10px 10px 10px;
             }
-            h1 {
-                font-size: 22px;
+            .header-wrapper h1 {
+                font-size: 20px;
+            }
+            .header-buttons button {
+                font-size: 16px;
+                padding: 2px 4px;
             }
             #counterDisplay {
                 font-size: 34px;
@@ -1021,13 +1038,29 @@
                 font-size: 12px;
             }
         }
+
+        @media (max-width: 400px) {
+            .header-wrapper h1 {
+                font-size: 18px;
+            }
+            .header-buttons button {
+                font-size: 14px;
+                padding: 2px 3px;
+            }
+            #counterDisplay {
+                font-size: 28px;
+            }
+            .world-btn {
+                font-size: 9px;
+                padding: 2px 6px;
+            }
+        }
     </style>
 </head>
 <body>
 
     <!-- ===== ФОНЫ МИРОВ ===== -->
     <div class="world-bg" id="worldBg">
-        <!-- ОКЕАН -->
         <div class="bg-layer visible" data-world="ocean" id="bgOcean">
             <div class="bg-ocean" style="width:100%;height:100%;position:relative;overflow:hidden;">
                 <div class="sun"></div>
@@ -1039,7 +1072,6 @@
                 <div class="bubbles"></div>
             </div>
         </div>
-        <!-- ПУСТЫНЯ -->
         <div class="bg-layer hidden" data-world="desert" id="bgDesert">
             <div class="bg-desert" style="width:100%;height:100%;position:relative;overflow:hidden;">
                 <div class="sun"></div>
@@ -1051,7 +1083,6 @@
                 <div class="dunes"></div>
             </div>
         </div>
-        <!-- ЛЕДНИК -->
         <div class="bg-layer hidden" data-world="ice" id="bgIce">
             <div class="bg-ice" style="width:100%;height:100%;position:relative;overflow:hidden;">
                 <div class="aurora"></div>
@@ -1065,7 +1096,6 @@
                 <div class="ice-mountains"></div>
             </div>
         </div>
-        <!-- КОСМОС -->
         <div class="bg-layer hidden" data-world="space" id="bgSpace">
             <div class="bg-space" style="width:100%;height:100%;position:relative;overflow:hidden;">
                 <div class="nebula"></div>
@@ -1079,19 +1109,22 @@
 
     <!-- ===== КОНТЕЙНЕР ===== -->
     <div class="container" id="mainContainer">
-        <div class="header-buttons">
-            <button id="skillsBtn">🧠</button>
-            <button id="profileBtn">👤</button>
-            <button id="settingsToggle">⚙️</button>
+        <!-- ШАПКА: НАЗВАНИЕ СЛЕВА, КНОПКИ СПРАВА -->
+        <div class="header-wrapper">
+            <h1>🫧 <span>Water</span> Clicker</h1>
+            <div class="header-buttons">
+                <button id="skillsBtn">🧠</button>
+                <button id="profileBtn">👤</button>
+                <button id="settingsToggle">⚙️</button>
+            </div>
         </div>
+        <div class="sub">~ бесконечный фарм капель ~</div>
+
         <div class="settings-menu" id="settingsMenu">
             <button class="btn btn-danger" id="resetBtn">🔄 Сброс</button>
             <button class="btn btn-warning" id="bgBtn">🎨 Фон</button>
             <button class="btn btn-success" id="soundBtn">🔊 Звук</button>
         </div>
-
-        <h1>🫧 <span>Water</span> Clicker</h1>
-        <div class="sub">~ бесконечный фарм капель ~</div>
 
         <div class="score-block">
             <div id="counterDisplay">0</div>
@@ -1329,12 +1362,10 @@
             const world = WORLDS[state.world];
             if (!world) return;
 
-            // Обновляем кнопки
             document.querySelectorAll('.world-btn').forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.world === state.world);
             });
 
-            // Меняем фоны
             document.querySelectorAll('.bg-layer').forEach(layer => {
                 const isActive = layer.dataset.world === state.world;
                 layer.classList.toggle('visible', isActive);
