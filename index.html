@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Water Clicker 🫧</title>
     <style>
+        /* ===== ОБЩИЕ СТИЛИ ===== */
         * {
             margin: 0;
             padding: 0;
@@ -124,6 +125,8 @@
         .settings-menu .btn-pink:hover {
             background: #8a3a7a;
         }
+
+        /* ===== ВСПЛЫВАЮЩЕЕ ОКНО СОБЫТИЙ ===== */
         .event-popup {
             position: fixed;
             top: 50%;
@@ -198,6 +201,8 @@
             border-color: #ffb84d;
             box-shadow: 0 0 80px rgba(255, 184, 77, 0.3);
         }
+
+        /* ===== МЕНЮ МАГАЗИНА СКИНОВ ===== */
         .shop-overlay {
             position: fixed;
             top: 0;
@@ -333,6 +338,8 @@
             background: #3a4a6a;
             color: #eee;
         }
+
+        /* ===== ОКНО ИНФО О СКИНЕ ===== */
         .skin-info-overlay {
             position: fixed;
             top: 0;
@@ -480,6 +487,8 @@
             background: #3a4a6a;
             color: #eee;
         }
+
+        /* ===== КНОПКА КЛИКА (динамическая) ===== */
         #clickBtn {
             transition: all 0.3s ease;
             position: relative;
@@ -507,6 +516,8 @@
                 transform: scale(1);
             }
         }
+
+        /* ===== ОСТАЛЬНЫЕ СТИЛИ ===== */
         h1 {
             font-size: 36px;
             color: #5cb8ff;
@@ -777,6 +788,7 @@
                 transform: scale(1);
             }
         }
+
         .pet-section {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
@@ -866,6 +878,7 @@
         .pet-detail .btn-sm.feed:hover {
             background: #00f0b0;
         }
+
         .achievement-overlay {
             position: fixed;
             top: 0;
@@ -954,6 +967,7 @@
         .ach-item-window .ach-status {
             font-size: 16px;
         }
+
         .leaderboard-section {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
@@ -1020,6 +1034,7 @@
 <body>
 
     <div class="container">
+        <!-- ШАПКА -->
         <div class="header-buttons">
             <button class="ach-btn" id="achievementBtn">🏆</button>
             <button class="shop-btn" id="shopBtn">🎨</button>
@@ -1034,12 +1049,14 @@
         <h1>🫧 <span>Water</span> Clicker</h1>
         <div class="sub">~ бесконечный фарм капель ~</div>
 
+        <!-- СЧЁТ -->
         <div class="score-block">
             <div id="counterDisplay">0</div>
             <div id="pearlDisplay">🪸 Жемчуг: 0</div>
             <div id="prestigeDisplay"></div>
         </div>
 
+        <!-- ВСПЛЫВАЮЩЕЕ ОКНО СОБЫТИЙ -->
         <div class="event-popup hidden" id="eventPopup">
             <span class="event-icon" id="eventIcon">🎉</span>
             <div class="event-text" id="eventText">Событие!</div>
@@ -1047,12 +1064,14 @@
             <button class="btn" id="eventCloseBtn">Понятно!</button>
         </div>
 
+        <!-- СТАТИСТИКА -->
         <div class="stat-grid">
             <div>💧 Капель: <span id="statClicks">0</span></div>
             <div>⚡ Капель/сек: <span id="statCps">0</span></div>
             <div>🌟 Престиж: <span id="statPrestige">0</span></div>
         </div>
 
+        <!-- КНОПКА КЛИКА (ДИНАМИЧЕСКАЯ) -->
         <div class="btn-group">
             <button class="btn btn-primary" id="clickBtn">
                 <span class="btn-emoji" id="btnEmoji">💧</span>
@@ -1060,12 +1079,14 @@
             </button>
         </div>
 
+        <!-- ОСНОВНЫЕ КНОПКИ -->
         <div class="btn-group">
             <button class="btn btn-success" id="autoBtn">▶ АВТО</button>
             <button class="btn btn-purple" id="prestigeBtn">🌟 ПРЕСТИЖ</button>
             <button class="btn btn-warning" id="dailyBtn">🎁 ДЕНЬ</button>
         </div>
 
+        <!-- ТАБЛИЦА ЛИДЕРОВ -->
         <div class="leaderboard-section">
             <h3>🏆 ТАБЛИЦА ЛИДЕРОВ</h3>
             <div class="lb-list" id="leaderboardList">
@@ -1073,12 +1094,14 @@
             </div>
         </div>
 
+        <!-- ПИТОМЦЫ -->
         <div class="pet-section">
             <h3>🐾 ПИТОМЦЫ</h3>
             <div class="pet-list" id="petList"></div>
             <div id="petDetail" class="hidden pet-detail"></div>
         </div>
 
+        <!-- МАГАЗИН БУСТОВ -->
         <div style="margin:12px 0;">
             <div style="text-align:left;font-size:13px;color:#667799;margin-bottom:6px;">🏪 МАГАЗИН БУСТОВ</div>
 
@@ -1106,6 +1129,7 @@
         </footer>
     </div>
 
+    <!-- МЕНЮ ДОСТИЖЕНИЙ -->
     <div class="achievement-overlay" id="achievementOverlay">
         <div class="achievement-window">
             <button class="close-btn" id="closeAchievementBtn">✕</button>
@@ -1114,6 +1138,7 @@
         </div>
     </div>
 
+    <!-- МЕНЮ МАГАЗИНА СКИНОВ -->
     <div class="shop-overlay" id="shopOverlay">
         <div class="shop-window">
             <button class="close-btn" id="closeShopBtn">✕</button>
@@ -1126,6 +1151,7 @@
         </div>
     </div>
 
+    <!-- ОКНО ИНФО О СКИНЕ -->
     <div class="skin-info-overlay" id="skinInfoOverlay">
         <div class="skin-info-window">
             <button class="close-btn" id="closeSkinInfoBtn">✕</button>
@@ -1142,19 +1168,9 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
-    </script>
     <script>
         // ============================================================
-        // 1. SUPABASE (ТВОИ ДАННЫЕ УЖЕ ВСТАВЛЕНЫ)
-        // ============================================================
-        const SUPABASE_URL = 'https://cduuglluvucwwgxpepdv.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_EsswYbyt0eMdWYzoZgGwyQ_ZqGJS-8M';
-
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // ============================================================
-        // 2. СОСТОЯНИЕ
+        // 1. СОСТОЯНИЕ
         // ============================================================
         let state = {
             score: 0,
@@ -1273,13 +1289,9 @@
         let cps = 0;
         let soundEnabled = true;
         let boostTimer = null;
-        let currentShopTab = 'drop';
-        let currentSkinIndex = 0;
-        let currentSkinList = SKINS_DROP;
-        let currentSkinType = 'drop';
 
         // ============================================================
-        // 3. ЗАГРУЗКА / СОХРАНЕНИЕ
+        // 2. ЗАГРУЗКА / СОХРАНЕНИЕ
         // ============================================================
         function loadGame() {
             const saved = localStorage.getItem('waterClickerSave');
@@ -1343,6 +1355,65 @@
         }
 
         // ============================================================
+        // 3. КНОПКА КЛИКА (ДИНАМИЧЕСКАЯ)
+        // ============================================================
+        function updateClickButton() {
+            const emoji = state.activeSkin.drop || '💧';
+            const btn = document.getElementById('clickBtn');
+            const emojiSpan = document.getElementById('btnEmoji');
+            const textSpan = document.getElementById('btnText');
+
+            // Меняем эмодзи
+            emojiSpan.textContent = emoji;
+
+            // Добавляем класс для анимации
+            btn.classList.remove('pulse');
+            void btn.offsetWidth; // триггер перерисовки
+            btn.classList.add('pulse');
+
+            // Меняем стиль кнопки в зависимости от скина
+            const skin = SKINS_DROP.find(s => s.id === emoji);
+            if (skin) {
+                btn.style.backgroundColor = '#5cb8ff';
+                btn.style.boxShadow = '0 4px 0 #2a7ab0';
+                btn.style.color = '#0a0a1a';
+                btn.style.border = 'none';
+
+                // Особые стили для разных скинов
+                switch (skin.style) {
+                    case 'wave':
+                        btn.style.background = 'linear-gradient(135deg, #5cb8ff, #00d4a0)';
+                        break;
+                    case 'ocean':
+                        btn.style.background = 'linear-gradient(135deg, #0a4a6a, #5cb8ff)';
+                        btn.style.color = '#fff';
+                        break;
+                    case 'diamond':
+                        btn.style.background = 'linear-gradient(135deg, #74b9ff, #a29bfe)';
+                        btn.style.boxShadow = '0 4px 0 #4a3a7a, 0 0 20px rgba(116, 185, 255, 0.3)';
+                        break;
+                    case 'star':
+                        btn.style.background = 'linear-gradient(135deg, #fdcb6e, #ffb84d)';
+                        btn.style.boxShadow = '0 4px 0 #b08020, 0 0 20px rgba(253, 203, 110, 0.3)';
+                        break;
+                    case 'fire':
+                        btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff2d55)';
+                        btn.style.boxShadow = '0 4px 0 #b0405a, 0 0 20px rgba(255, 45, 85, 0.3)';
+                        btn.style.color = '#fff';
+                        break;
+                    default:
+                        btn.style.background = '#5cb8ff';
+                        btn.style.boxShadow = '0 4px 0 #2a7ab0';
+                        btn.style.color = '#0a0a1a';
+                        break;
+                }
+            }
+
+            // Обновляем текст
+            textSpan.textContent = ' КАПНУТЬ!';
+        }
+
+        // ============================================================
         // 4. ВСПЛЫВАЮЩЕЕ ОКНО СОБЫТИЙ
         // ============================================================
         let eventTimeout = null;
@@ -1387,6 +1458,7 @@
         function spendPearls(amount) {
             if (state.pearls < amount) return false;
             state.pearls -= amount;
+            // Анимация траты
             const pearlDisplay = document.getElementById('pearlDisplay');
             pearlDisplay.classList.remove('spent');
             void pearlDisplay.offsetWidth;
@@ -1410,6 +1482,11 @@
         // ============================================================
         // 6. МАГАЗИН СКИНОВ
         // ============================================================
+        let currentShopTab = 'drop';
+        let currentSkinIndex = 0;
+        let currentSkinList = SKINS_DROP;
+        let currentSkinType = 'drop';
+
         function renderSkins() {
             const grid = document.getElementById('shopGrid');
             const skins = currentShopTab === 'drop' ? SKINS_DROP : SKINS_BG;
@@ -1517,6 +1594,7 @@
                         showEventPopup('🪸', 'Не хватает жемчуга!', `Нужно ${skin.price} жемчуга.`, 'bad');
                         return;
                     }
+                    // Тратим жемчуг
                     if (!spendPearls(skin.price)) return;
 
                     if (type === 'drop') {
@@ -1550,82 +1628,65 @@
         document.getElementById('skinNextBtn').addEventListener('click', () => navigateSkin(1));
 
         // ============================================================
-        // 7. ТАБЛИЦА ЛИДЕРОВ (ГЛОБАЛЬНАЯ)
+        // 7. ТАБЛИЦА ЛИДЕРОВ
         // ============================================================
-        let playerName = '';
-
         function getPlayerName() {
-            if (playerName) return playerName;
             let name = localStorage.getItem('playerName');
             if (!name) {
                 name = prompt('Введите своё имя для таблицы лидеров:', 'Игрок');
                 if (!name) name = 'Игрок';
                 localStorage.setItem('playerName', name);
             }
-            playerName = name;
             return name;
         }
 
-        async function loadLeaderboard() {
-            try {
-                const { data, error } = await supabase
-                    .from('leaderboard')
-                    .select('player_name, score')
-                    .order('score', { ascending: false })
-                    .limit(20);
+        function loadLeaderboard() {
+            const list = document.getElementById('leaderboardList');
+            const lb = JSON.parse(localStorage.getItem('leaderboard') || '[]');
 
-                const list = document.getElementById('leaderboardList');
-                if (error) {
-                    console.error('Ошибка загрузки лидерборда:', error);
-                    list.innerHTML = '<div style="color:#ff6b8a;font-size:13px;">⚠️ Ошибка загрузки</div>';
-                    return;
-                }
-
-                if (!data || data.length === 0) {
-                    list.innerHTML = '<div style="color:#667799;font-size:13px;text-align:center;">Пока нет рекордов. Будь первым!</div>';
-                    return;
-                }
-
-                let html = '';
-                const myName = getPlayerName();
-                data.forEach((entry, index) => {
-                    const isMe = entry.player_name === myName;
-                    const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
-                    html += `
-                                <div class="lb-row ${isMe ? 'me' : ''}">
-                                    <span class="lb-rank">${medal}</span>
-                                    <span class="lb-name">${entry.player_name}</span>
-                                    <span class="lb-score">${entry.score}</span>
-                                </div>
-                            `;
-                });
-                list.innerHTML = html;
-            } catch (e) {
-                console.error('Ошибка:', e);
-                document.getElementById('leaderboardList').innerHTML =
-                    '<div style="color:#ff6b8a;font-size:13px;">⚠️ Ошибка подключения</div>';
+            if (lb.length === 0) {
+                list.innerHTML = '<div style="color:#667799;font-size:13px;text-align:center;">Пока нет рекордов. Будь первым!</div>';
+                return;
             }
+
+            const sorted = lb.sort((a, b) => b.score - a.score).slice(0, 20);
+            let html = '';
+            sorted.forEach((entry, index) => {
+                const isMe = entry.name === getPlayerName();
+                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `#${index + 1}`;
+                html += `
+                            <div class="lb-row ${isMe ? 'me' : ''}">
+                                <span class="lb-rank">${medal}</span>
+                                <span class="lb-name">${entry.name}</span>
+                                <span class="lb-score">${entry.score}</span>
+                            </div>
+                        `;
+            });
+            list.innerHTML = html;
         }
 
-        async function saveToLeaderboard() {
-            try {
-                const name = getPlayerName();
-                const { error } = await supabase
-                    .from('leaderboard')
-                    .upsert({
-                        player_name: name,
-                        score: state.score,
-                        total_clicks: state.totalClicks,
-                        prestige_level: state.prestigeLevel,
-                        updated_at: new Date()
-                    }, { onConflict: 'player_name' });
+        function saveToLeaderboard() {
+            const name = getPlayerName();
+            const lb = JSON.parse(localStorage.getItem('leaderboard') || '[]');
 
-                if (error) {
-                    console.error('Ошибка сохранения в лидерборд:', error);
+            const existing = lb.find(e => e.name === name);
+            if (existing) {
+                if (state.score > existing.score) {
+                    existing.score = state.score;
+                    existing.totalClicks = state.totalClicks;
+                    existing.prestige = state.prestigeLevel;
                 }
-            } catch (e) {
-                console.error('Ошибка:', e);
+            } else {
+                lb.push({
+                    name: name,
+                    score: state.score,
+                    totalClicks: state.totalClicks,
+                    prestige: state.prestigeLevel
+                });
             }
+
+            localStorage.setItem('leaderboard', JSON.stringify(lb));
+            loadLeaderboard();
         }
 
         // ============================================================
@@ -1843,7 +1904,7 @@
         }
 
         // ============================================================
-        // 12. ВИЗУАЛ
+        // 12. ВИЗУАЛ (частицы)
         // ============================================================
         function spawnParticles(x, y, count = 12, color = null) {
             const colors = ['#5cb8ff', '#00d4a0', '#ffb84d', '#ff6b8a', '#9b6bff'];
@@ -1974,6 +2035,7 @@
             const btn = document.getElementById('clickBtn');
             btn.style.transform = 'scale(0.92)';
             setTimeout(() => btn.style.transform = 'scale(1)', 100);
+            // Анимация пульсации кнопки при клике
             btn.classList.remove('pulse');
             void btn.offsetWidth;
             btn.classList.add('pulse');
@@ -1982,57 +2044,6 @@
                 const pet = state.pets.find(p => p.id === state.activePetId);
                 if (pet) showPetDetail(pet);
             }
-        }
-
-        function updateClickButton() {
-            const emoji = state.activeSkin.drop || '💧';
-            const btn = document.getElementById('clickBtn');
-            const emojiSpan = document.getElementById('btnEmoji');
-            const textSpan = document.getElementById('btnText');
-
-            emojiSpan.textContent = emoji;
-
-            btn.classList.remove('pulse');
-            void btn.offsetWidth;
-            btn.classList.add('pulse');
-
-            const skin = SKINS_DROP.find(s => s.id === emoji);
-            if (skin) {
-                btn.style.backgroundColor = '#5cb8ff';
-                btn.style.boxShadow = '0 4px 0 #2a7ab0';
-                btn.style.color = '#0a0a1a';
-                btn.style.border = 'none';
-
-                switch (skin.style) {
-                    case 'wave':
-                        btn.style.background = 'linear-gradient(135deg, #5cb8ff, #00d4a0)';
-                        break;
-                    case 'ocean':
-                        btn.style.background = 'linear-gradient(135deg, #0a4a6a, #5cb8ff)';
-                        btn.style.color = '#fff';
-                        break;
-                    case 'diamond':
-                        btn.style.background = 'linear-gradient(135deg, #74b9ff, #a29bfe)';
-                        btn.style.boxShadow = '0 4px 0 #4a3a7a, 0 0 20px rgba(116, 185, 255, 0.3)';
-                        break;
-                    case 'star':
-                        btn.style.background = 'linear-gradient(135deg, #fdcb6e, #ffb84d)';
-                        btn.style.boxShadow = '0 4px 0 #b08020, 0 0 20px rgba(253, 203, 110, 0.3)';
-                        break;
-                    case 'fire':
-                        btn.style.background = 'linear-gradient(135deg, #ff6b6b, #ff2d55)';
-                        btn.style.boxShadow = '0 4px 0 #b0405a, 0 0 20px rgba(255, 45, 85, 0.3)';
-                        btn.style.color = '#fff';
-                        break;
-                    default:
-                        btn.style.background = '#5cb8ff';
-                        btn.style.boxShadow = '0 4px 0 #2a7ab0';
-                        btn.style.color = '#0a0a1a';
-                        break;
-                }
-            }
-
-            textSpan.textContent = ' КАПНУТЬ!';
         }
 
         function updateUI() {
@@ -2221,6 +2232,7 @@
         document.getElementById('resetBtn').addEventListener('click', resetGame);
         document.getElementById('soundToggleBtn').addEventListener('click', toggleSound);
 
+        // Достижения
         document.getElementById('achievementBtn').addEventListener('click', () => {
             const overlay = document.getElementById('achievementOverlay');
             overlay.classList.toggle('open');
@@ -2235,6 +2247,7 @@
             }
         });
 
+        // Магазин скинов
         document.getElementById('shopBtn').addEventListener('click', () => {
             document.getElementById('shopOverlay').classList.toggle('open');
             renderSkins();
@@ -2248,6 +2261,7 @@
             }
         });
 
+        // Табы в магазине скинов
         document.querySelectorAll('.shop-tabs button').forEach(tab => {
             tab.addEventListener('click', () => {
                 document.querySelectorAll('.shop-tabs button').forEach(t => t.classList.remove('active'));
@@ -2257,6 +2271,7 @@
             });
         });
 
+        // Инфо о скине
         document.getElementById('closeSkinInfoBtn').addEventListener('click', () => {
             document.getElementById('skinInfoOverlay').classList.remove('open');
         });
